@@ -149,11 +149,52 @@
     margin-bottom: 1px;
   }
 
+  .guide-group {
+    border-bottom: 1px solid #243649;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  .guide-links {
+    display: flex;
+    flex-direction: column;
+  }
+  .guide-link {
+    display: block;
+    padding: 9px 20px 9px 28px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    line-height: 1.35;
+    text-align: left;
+    transition: all 0.15s;
+    width: 100%;
+  }
+  .guide-link:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+    border-left-color: #3a5a74;
+  }
+  .guide-link.active {
+    color: var(--sidebar-active);
+    border-left-color: var(--sidebar-active);
+    background: rgba(233,160,96,0.08);
+    font-weight: 600;
+  }
+
   /* ── MAIN CONTENT ── */
   #main {
     margin-left: var(--sidebar-width);
     flex: 1;
     min-height: 100vh;
+  }
+
+  .menu-toggle {
+    display: none;
   }
 
   .chapter-panel { display: none; }
@@ -631,6 +672,48 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 800px) {
     :root { --sidebar-width: 220px; }
+    body {
+      display: block;
+    }
+    #main {
+      margin-left: 0;
+    }
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: fixed;
+      top: 12px;
+      left: 14px;
+      z-index: 120;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-family: "Crimson Pro", serif;
+      border-radius: 4px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      border: 1px solid #243649;
+    }
+    #sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease-out;
+      width: min(var(--sidebar-width), 85vw);
+      min-width: 0;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+    }
+    #sidebar.sidebar-open {
+      transform: translateX(0);
+    }
+    body.sidebar-open {
+      overflow: hidden;
+    }
+    body.sidebar-open main::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 90;
+    }
     .chapter-header, .chapter-body { padding-left: 28px; padding-right: 28px; }
     .chapter-header h2 { font-size: 26px; }
     .panel-nav { padding: 24px 28px 48px; }
@@ -702,6 +785,10 @@
 </head>
 <body>
 
+<button id="sidebarToggle" class="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">
+  ☰ Contents
+</button>
+
 <!-- ══════════════════════════════════════════
      SIDEBAR
 ══════════════════════════════════════════ -->
@@ -712,6 +799,16 @@
   </div>
 
   <div class="sidebar-nav">
+
+    <div class="guide-group">
+      <button class="part-toggle open" onclick="togglePart(this)">
+        Guides <span class="arrow">▶</span>
+      </button>
+      <div class="guide-links open chapter-list">
+        <a class="guide-link active" href="index.html" aria-current="page">Key Word Transformations</a>
+        <a class="guide-link" href="tense-building-blocks.html">English Tense Building Blocks</a>
+      </div>
+    </div>
 
     <!-- INTRO -->
     <div class="part-group">
@@ -3048,6 +3145,13 @@
         if (toggle) toggle.classList.add('open');
       }
     }
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (window.innerWidth <= 800 && sidebar && sidebar.classList.contains('sidebar-open')) {
+      sidebar.classList.remove('sidebar-open');
+      document.body.classList.remove('sidebar-open');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+    }
   }
 
   function showChapterById(id) {
@@ -3060,6 +3164,20 @@
     const list = btn.nextElementSibling;
     list.classList.toggle('open');
   }
+
+  (function () {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (!sidebar || !toggleBtn) return;
+
+    function toggleSidebar() {
+      const isOpen = sidebar.classList.toggle('sidebar-open');
+      document.body.classList.toggle('sidebar-open', isOpen);
+      toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    toggleBtn.addEventListener('click', toggleSidebar);
+  })();
 
   // Checkbox interactivity
   document.querySelectorAll('.checkbox-cell').forEach(cell => {

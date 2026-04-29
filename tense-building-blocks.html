@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Tense Building Blocks: Time, Aspect, Negatives, and Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #1b2c3e;
+    --sidebar-text: #c9c4bc;
+    --sidebar-hover: #243649;
+    --sidebar-active: #e9a060;
+    --sidebar-part: #8fadc4;
+    --sidebar-width: 270px;
+    --main-bg: #f5f1ea;
+    --paper: #fdfaf5;
+    --text: #252320;
+    --text-light: #5a5550;
+    --accent: #8b3a2a;
+    --accent-light: #c4533f;
+    --amber: #d4862a;
+    --blue-note: #2a4f72;
+    --green-note: #2a5c3f;
+    --border: #ddd8cc;
+    --table-head: #e8e1d5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--text);
+    background: var(--main-bg);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  #sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: #3a5268 var(--sidebar-bg);
+  }
+  #sidebar::-webkit-scrollbar { width: 5px; }
+  #sidebar::-webkit-scrollbar-thumb { background: #3a5268; border-radius: 3px; }
+
+  .sidebar-title {
+    padding: 24px 20px 18px;
+    border-bottom: 1px solid #2d4156;
+  }
+  .sidebar-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+  .sidebar-title p {
+    font-size: 11.5px;
+    color: var(--sidebar-part);
+    margin-top: 4px;
+    font-family: 'Crimson Pro', serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-nav { flex: 1; padding: 10px 0 30px; }
+
+  .guide-group, .part-group { border-bottom: 1px solid #243649; }
+  .guide-group { padding-bottom: 8px; margin-bottom: 8px; }
+
+  .part-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    color: var(--sidebar-part);
+    font-family: 'Crimson Pro', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+  .part-toggle:hover { background: var(--sidebar-hover); }
+  .part-toggle .arrow {
+    font-size: 9px;
+    transition: transform 0.2s;
+    color: #4a6b84;
+  }
+  .part-toggle.open .arrow { transform: rotate(90deg); }
+
+  .guide-links,
+  .chapter-list {
+    display: none;
+    flex-direction: column;
+  }
+  .guide-links.open,
+  .chapter-list.open { display: flex; }
+
+  .guide-link,
+  .chapter-link {
+    display: block;
+    padding: 9px 20px 9px 28px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    line-height: 1.35;
+    text-align: left;
+    transition: all 0.15s;
+    width: 100%;
+  }
+  .chapter-link {
+    padding: 7px 20px 7px 28px;
+  }
+  .guide-link:hover,
+  .chapter-link:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+    border-left-color: #3a5a74;
+  }
+  .guide-link.active,
+  .chapter-link.active {
+    color: var(--sidebar-active);
+    border-left-color: var(--sidebar-active);
+    background: rgba(233,160,96,0.08);
+    font-weight: 600;
+  }
+  .chapter-link .ch-num {
+    font-size: 10px;
+    color: #4a6b84;
+    display: block;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+  }
+
+  #main {
+    margin-left: var(--sidebar-width);
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .chapter-panel { display: none; }
+  .chapter-panel.active {
+    display: block;
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter-header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 60px 36px;
+  }
+  .chapter-header .part-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .chapter-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .chapter-header .ch-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+
+  .chapter-body {
+    padding: 48px 60px 80px;
+    max-width: 900px;
+  }
+
+  .chapter-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 44px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .chapter-body h3:first-child { margin-top: 0; }
+
+  .chapter-body h4 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--blue-note);
+    margin: 28px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 12px;
+  }
+
+  .chapter-body p { margin-bottom: 14px; }
+  .chapter-body ul, .chapter-body ol { margin: 12px 0 18px 24px; }
+  .chapter-body li { margin-bottom: 6px; }
+
+  strong { color: var(--text); font-weight: 600; }
+
+  .intro-lead {
+    font-size: 22px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+
+  .note-box {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue-note);
+    border-radius: 0 6px 6px 0;
+    padding: 16px 18px;
+    margin: 18px 0;
+  }
+  .formula-box {
+    background: #f4efe6;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 18px 0;
+  }
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    background: #e8e2d8;
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    background: #e8e2d8;
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  .grid-table, .tense-table, .polarity-table, .refs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0 24px;
+    font-size: 15px;
+  }
+  .grid-table th, .grid-table td,
+  .tense-table th, .tense-table td,
+  .polarity-table th, .polarity-table td,
+  .refs-table th, .refs-table td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    vertical-align: top;
+  }
+  .grid-table th, .tense-table th, .polarity-table th, .refs-table th {
+    background: var(--table-head);
+    text-align: left;
+    font-weight: 600;
+  }
+  .grid-table td, .tense-table td, .polarity-table td { background: var(--paper); }
+  .grid-table td:nth-child(1), .grid-table td:nth-child(2) { width: 18%; }
+  .tense-table td:nth-child(1), .tense-table td:nth-child(2) { width: 18%; }
+  .polarity-table td:nth-child(1), .polarity-table td:nth-child(2) { width: 12%; }
+
+  .pattern-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 20px 0 8px;
+    color: var(--blue-note);
+  }
+
+  .example-sentence {
+    font-style: italic;
+    padding: 12px 20px;
+    border-left: 4px solid var(--border);
+    margin: 12px 0;
+    background: var(--paper);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .aspect-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 16px 0;
+  }
+
+  .chapter-body hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 36px 0;
+  }
+
+  .panel-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 60px 60px;
+    border-top: 1px solid var(--border);
+    max-width: 900px;
+  }
+  .nav-btn {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: var(--text-light);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn:hover {
+    background: var(--blue-note);
+    color: #fff;
+    border-color: var(--blue-note);
+  }
+  .nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+  .nav-btn .nav-ch { font-size: 12px; display: block; color: var(--amber); }
+  .nav-btn:hover .nav-ch { color: #f0c080; }
+
+  .footnotes {
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 14px;
+    color: var(--text-light);
+  }
+  .footnotes a { color: var(--blue-note); }
+
+  #main { scrollbar-width: thin; }
+
+  @media (max-width: 800px) {
+    :root { --sidebar-width: 220px; }
+    body { display: block; }
+    #main { margin-left: 0; }
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: fixed;
+      top: 12px;
+      left: 14px;
+      z-index: 120;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-family: "Crimson Pro", serif;
+      border-radius: 4px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      border: 1px solid #243649;
+    }
+    #sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease-out;
+      width: min(var(--sidebar-width), 85vw);
+      min-width: 0;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+    }
+    #sidebar.sidebar-open { transform: translateX(0); }
+    body.sidebar-open { overflow: hidden; }
+    body.sidebar-open main::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 90;
+    }
+    .chapter-header, .chapter-body { padding-left: 28px; padding-right: 28px; }
+    .chapter-header h2 { font-size: 26px; }
+    .panel-nav { padding: 24px 28px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<button id="sidebarToggle" class="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">
+  Contents
+</button>
+
+<nav id="sidebar">
+  <div class="sidebar-title">
+    <h1>English Tense Building Blocks</h1>
+    <p>Time, Aspect, Negatives, and Questions</p>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="guide-group">
+      <button class="part-toggle open" onclick="togglePart(this)">
+        Guides <span class="arrow">▶</span>
+      </button>
+      <div class="guide-links open">
+        <a class="guide-link" href="index.html">Key Word Transformations</a>
+        <a class="guide-link active" href="tense-building-blocks.html" aria-current="page">English Tense Building Blocks</a>
+      </div>
+    </div>
+
+    <div class="part-group">
+      <button class="part-toggle open" onclick="togglePart(this)">
+        Chapter List <span class="arrow">▶</span>
+      </button>
+      <div class="chapter-list open">
+        <button class="chapter-link active" onclick="showChapter('overview', this)">
+          <span class="ch-num">Overview</span>
+          Purpose and structure
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch1', this)">
+          <span class="ch-num">Chapter 1</span>
+          Core building blocks
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch2', this)">
+          <span class="ch-num">Chapter 2</span>
+          Time and aspect as building blocks
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch3', this)">
+          <span class="ch-num">Chapter 3</span>
+          Aspect patterns and the full tense grid
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch4', this)">
+          <span class="ch-num">Chapter 4</span>
+          Why each aspect is used
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch5', this)">
+          <span class="ch-num">Chapter 5</span>
+          Negatives
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch6', this)">
+          <span class="ch-num">Chapter 6</span>
+          Yes/no questions and wh-questions
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch7', this)">
+          <span class="ch-num">Chapter 7</span>
+          Integrated tense-aspect-polarity chart
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch8', this)">
+          <span class="ch-num">Chapter 8</span>
+          How the blocks move
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<div id="panel-overview" class="chapter-panel active">
+  <div class="chapter-header">
+    <div class="part-label">Overview</div>
+    <h2>Time, Aspect, Negatives, and Questions</h2>
+  </div>
+  <div class="chapter-body">
+    <p class="intro-lead">English tense forms are built from a small number of reusable blocks.</p>
+    <p>This guide explains how <strong>time</strong> (present, past, future), <strong>aspect</strong> (simple, continuous, perfect, perfect continuous), and polarity or question form combine to make the 12 main tense patterns.</p>
+    <div class="note-box">
+      <p>The main idea is simple: keep the pattern, move the first auxiliary, and the whole tense changes in a predictable way.</p>
+    </div>
+    <p>That makes the system easier to revise than a long list of isolated verb forms. Each chapter below focuses on one piece of the system and then shows how the same piece appears again and again.</p>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn disabled">← Previous</button>
+    <button class="nav-btn" onclick="showChapterById('ch1')"><div><span class="nav-ch">Chapter 1</span>Core building blocks</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch1" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 1</div>
+    <h2>Core Building Blocks</h2>
+  </div>
+  <div class="chapter-body">
+    <h3>The three basic pieces</h3>
+    <p>Every finite verb phrase can be analysed as subject + auxiliary verb(s) + main verb.</p>
+    <ul>
+      <li><strong>Subject</strong>: the doer or bearer of the state, such as I, she, the students, or my car.</li>
+      <li><strong>Auxiliary verb(s)</strong>: helping verbs such as be, have, will, do/does/did, and modals like can, may, should.</li>
+      <li><strong>Main verb</strong>: the lexical verb in the right form.</li>
+    </ul>
+
+    <h3>Verb forms you need</h3>
+    <table class="grid-table">
+      <thead>
+        <tr>
+          <th>Label</th>
+          <th>Form</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>V1</td><td>Base form</td><td>work, go, eat</td></tr>
+        <tr><td>V2</td><td>Past simple</td><td>worked, went, ate</td></tr>
+        <tr><td>V3</td><td>Past participle</td><td>worked, gone, eaten</td></tr>
+        <tr><td>V-ing</td><td>Present participle</td><td>working, going, eating</td></tr>
+      </tbody>
+    </table>
+
+    <div class="formula-box">
+      <p><span class="formula">Time</span> is usually carried by the first auxiliary, or by the main verb in simple present and simple past.</p>
+      <p><span class="formula">Aspect</span> is carried by combinations such as be + V-ing or have + V3.</p>
+    </div>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('overview')">← <div><span class="nav-ch">Overview</span>Purpose and structure</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch2')"><div><span class="nav-ch">Chapter 2</span>Time and aspect</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch2" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 2</div>
+    <h2>Time and Aspect as Building Blocks</h2>
+  </div>
+  <div class="chapter-body">
+    <p>English tense forms combine one of three times with one of four aspects.</p>
+    <div class="aspect-card">
+      <h4>Time</h4>
+      <p>Present, past, and future tell us <em>when</em> the event or state is placed.</p>
+      <h4>Aspect</h4>
+      <p>Simple, continuous, perfect, and perfect continuous tell us how the event is viewed.</p>
+    </div>
+
+    <table class="tense-table">
+      <thead>
+        <tr>
+          <th>Aspect</th>
+          <th>General idea</th>
+          <th>Typical meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Simple</td><td>No extra aspect marker</td><td>Facts, habits, completed events, neutral future</td></tr>
+        <tr><td>Continuous</td><td>be + V-ing</td><td>Action in progress, temporary or unfinished</td></tr>
+        <tr><td>Perfect</td><td>have + V3</td><td>Completed before another time; result matters</td></tr>
+        <tr><td>Perfect continuous</td><td>have been + V-ing</td><td>Duration or ongoing activity up to a reference time</td></tr>
+      </tbody>
+    </table>
+
+    <p>The same four aspect patterns are reused for present, past, and future time, so the system is much smaller than it first looks.</p>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch1')">← <div><span class="nav-ch">Chapter 1</span>Core building blocks</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch3')"><div><span class="nav-ch">Chapter 3</span>Aspect patterns</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch3" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 3</div>
+    <h2>Aspect Patterns and the Full Tense Grid</h2>
+  </div>
+  <div class="chapter-body">
+    <h3>The lego rules</h3>
+    <div class="aspect-card">
+      <p><strong>Simple:</strong> present simple uses <code>S + V1(+s)</code>, past simple uses <code>S + V2</code>, and future simple uses <code>S + will + V1</code>.</p>
+      <p><strong>Continuous:</strong> <code>S + be + V-ing</code>, with the form of be showing the time.</p>
+      <p><strong>Perfect:</strong> <code>S + have + V3</code>, with have showing the time.</p>
+      <p><strong>Perfect continuous:</strong> <code>S + have been + V-ing</code>.</p>
+    </div>
+
+    <h3>Full tense grid</h3>
+    <table class="tense-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Aspect</th>
+          <th>Name</th>
+          <th>Pattern</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Present</td><td>Simple</td><td>Present simple</td><td><code>S + V1(+s)</code></td><td>She works.</td></tr>
+        <tr><td>Present</td><td>Continuous</td><td>Present continuous</td><td><code>S + am/is/are + V-ing</code></td><td>She is working.</td></tr>
+        <tr><td>Present</td><td>Perfect</td><td>Present perfect</td><td><code>S + has/have + V3</code></td><td>She has worked.</td></tr>
+        <tr><td>Present</td><td>Perfect continuous</td><td>Present perfect continuous</td><td><code>S + has/have been + V-ing</code></td><td>She has been working.</td></tr>
+        <tr><td>Past</td><td>Simple</td><td>Past simple</td><td><code>S + V2</code></td><td>She worked.</td></tr>
+        <tr><td>Past</td><td>Continuous</td><td>Past continuous</td><td><code>S + was/were + V-ing</code></td><td>She was working.</td></tr>
+        <tr><td>Past</td><td>Perfect</td><td>Past perfect</td><td><code>S + had + V3</code></td><td>She had worked.</td></tr>
+        <tr><td>Past</td><td>Perfect continuous</td><td>Past perfect continuous</td><td><code>S + had been + V-ing</code></td><td>She had been working.</td></tr>
+        <tr><td>Future</td><td>Simple</td><td>Future simple</td><td><code>S + will + V1</code></td><td>She will work.</td></tr>
+        <tr><td>Future</td><td>Continuous</td><td>Future continuous</td><td><code>S + will be + V-ing</code></td><td>She will be working.</td></tr>
+        <tr><td>Future</td><td>Perfect</td><td>Future perfect</td><td><code>S + will have + V3</code></td><td>She will have worked.</td></tr>
+        <tr><td>Future</td><td>Perfect continuous</td><td>Future perfect continuous</td><td><code>S + will have been + V-ing</code></td><td>She will have been working.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch2')">← <div><span class="nav-ch">Chapter 2</span>Time and aspect</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch4')"><div><span class="nav-ch">Chapter 4</span>Why each aspect is used</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch4" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 4</div>
+    <h2>Why Each Aspect Is Used</h2>
+  </div>
+  <div class="chapter-body">
+    <h3>Simple aspect</h3>
+    <p>Use it for habits, general truths, states, timetables, finished events, spontaneous decisions, promises, offers, and neutral future facts.</p>
+    <p class="example-sentence">The train leaves at 6. / She worked yesterday. / I will help you.</p>
+
+    <h3>Continuous aspect</h3>
+    <p>Use it for actions in progress, temporary situations, background actions, parallel past actions, and polite questions about arrangements.</p>
+    <p class="example-sentence">I am studying now. / She was cooking when I arrived. / Will you be staying long?</p>
+
+    <h3>Perfect aspect</h3>
+    <p>Use it to link one time to an earlier time, focusing on completion, result, experience, or a past event before another past point.</p>
+    <p class="example-sentence">I have lost my keys. / She had left before I arrived. / By Friday, I will have finished the report.</p>
+
+    <h3>Perfect continuous aspect</h3>
+    <p>Use it when the main idea is duration or ongoing activity up to a reference time.</p>
+    <p class="example-sentence">I have been studying all day. / He had been waiting for an hour when she arrived. / Next year I will have been teaching for ten years.</p>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch3')">← <div><span class="nav-ch">Chapter 3</span>Aspect patterns</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch5')"><div><span class="nav-ch">Chapter 5</span>Negatives</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch5" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 5</div>
+    <h2>Negatives</h2>
+  </div>
+  <div class="chapter-body">
+    <h3>Rule 1: tenses with an auxiliary</h3>
+    <p>If the tense already has an auxiliary, add <strong>not</strong> after the first auxiliary.</p>
+    <div class="formula-box">
+      <p><code>S + AUX + not + main verb</code></p>
+    </div>
+    <ul>
+      <li>She is working → She is not working.</li>
+      <li>They have finished → They have not finished.</li>
+      <li>I will go → I will not go.</li>
+      <li>She had not been waiting.</li>
+    </ul>
+
+    <h3>Rule 2: simple present and simple past</h3>
+    <p>When there is no auxiliary in the affirmative, use do-support.</p>
+    <div class="formula-box">
+      <p><code>S + do/does/did + not + V1</code></p>
+    </div>
+    <ul>
+      <li>He works → He does not work.</li>
+      <li>They go → They do not go.</li>
+      <li>She went → She did not go.</li>
+    </ul>
+
+    <table class="polarity-table">
+      <thead>
+        <tr>
+          <th>Pattern type</th>
+          <th>Negative rule</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>With be / have / will / modal</td><td>Add not after the first auxiliary</td></tr>
+        <tr><td>No auxiliary in simple present/past</td><td>Use do/does/did + not + V1</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch4')">← <div><span class="nav-ch">Chapter 4</span>Why each aspect is used</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch6')"><div><span class="nav-ch">Chapter 6</span>Questions</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch6" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 6</div>
+    <h2>Yes/No Questions and Wh-Questions</h2>
+  </div>
+  <div class="chapter-body">
+    <h3>Yes/no questions</h3>
+    <p>Make yes/no questions by moving the first auxiliary before the subject.</p>
+    <div class="formula-box">
+      <p><code>S + AUX + main verb</code> becomes <code>AUX + S + main verb?</code></p>
+    </div>
+    <ul>
+      <li>She is working → Is she working?</li>
+      <li>They have finished → Have they finished?</li>
+      <li>She has been studying → Has she been studying?</li>
+      <li>He had gone → Had he gone?</li>
+      <li>She will have been working → Will she have been working?</li>
+    </ul>
+
+    <h3>Simple present and simple past</h3>
+    <p>If there is no auxiliary, use do-support again.</p>
+    <ul>
+      <li>She works → Does she work?</li>
+      <li>He went → Did he go?</li>
+    </ul>
+
+    <h3>Wh-questions</h3>
+    <p>Put the wh-word in front of the yes/no question pattern.</p>
+    <ul>
+      <li>Does he work here? → Where does he work?</li>
+      <li>Did she arrive? → When did she arrive?</li>
+      <li>Has she been studying? → How long has she been studying?</li>
+    </ul>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch5')">← <div><span class="nav-ch">Chapter 5</span>Negatives</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch7')"><div><span class="nav-ch">Chapter 7</span>Integrated chart</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch7" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 7</div>
+    <h2>Integrated Tense-Aspect-Polarity Chart</h2>
+  </div>
+  <div class="chapter-body">
+    <p>This chart shows the same tense patterns in affirmative, negative, and yes/no question form.</p>
+
+    <h3>Present time</h3>
+    <table class="polarity-table">
+      <thead><tr><th>Aspect</th><th>Affirmative</th><th>Negative</th><th>Question</th></tr></thead>
+      <tbody>
+        <tr><td>Simple</td><td>She works.</td><td>She does not work.</td><td>Does she work?</td></tr>
+        <tr><td>Continuous</td><td>She is working.</td><td>She is not working.</td><td>Is she working?</td></tr>
+        <tr><td>Perfect</td><td>She has worked.</td><td>She has not worked.</td><td>Has she worked?</td></tr>
+        <tr><td>Perfect continuous</td><td>She has been working.</td><td>She has not been working.</td><td>Has she been working?</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Past time</h3>
+    <table class="polarity-table">
+      <thead><tr><th>Aspect</th><th>Affirmative</th><th>Negative</th><th>Question</th></tr></thead>
+      <tbody>
+        <tr><td>Simple</td><td>She worked.</td><td>She did not work.</td><td>Did she work?</td></tr>
+        <tr><td>Continuous</td><td>She was working.</td><td>She was not working.</td><td>Was she working?</td></tr>
+        <tr><td>Perfect</td><td>She had worked.</td><td>She had not worked.</td><td>Had she worked?</td></tr>
+        <tr><td>Perfect continuous</td><td>She had been working.</td><td>She had not been working.</td><td>Had she been working?</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Future time</h3>
+    <table class="polarity-table">
+      <thead><tr><th>Aspect</th><th>Affirmative</th><th>Negative</th><th>Question</th></tr></thead>
+      <tbody>
+        <tr><td>Simple</td><td>She will work.</td><td>She will not work.</td><td>Will she work?</td></tr>
+        <tr><td>Continuous</td><td>She will be working.</td><td>She will not be working.</td><td>Will she be working?</td></tr>
+        <tr><td>Perfect</td><td>She will have worked.</td><td>She will not have worked.</td><td>Will she have worked?</td></tr>
+        <tr><td>Perfect continuous</td><td>She will have been working.</td><td>She will not have been working.</td><td>Will she have been working?</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch6')">← <div><span class="nav-ch">Chapter 6</span>Questions</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch8')"><div><span class="nav-ch">Chapter 8</span>How the blocks move</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch8" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 8</div>
+    <h2>How the Blocks Move When Time or Aspect Changes</h2>
+  </div>
+  <div class="chapter-body">
+    <h3>Change time, keep aspect</h3>
+    <p>To change the time but keep the same aspect, usually change the first auxiliary, or swap V1 and V2 in simple forms.</p>
+    <ul>
+      <li>Continuous: She is working → She was working → She will be working.</li>
+      <li>Perfect: She has worked → She had worked → She will have worked.</li>
+      <li>Simple: She works → She worked → She will work.</li>
+    </ul>
+
+    <h3>Change aspect, keep time</h3>
+    <p>To change the aspect but keep the same time, adjust the auxiliary pattern and the main verb form.</p>
+    <ul>
+      <li>Present: She works → She is working → She has worked → She has been working.</li>
+      <li>Past: She worked → She was working → She had worked → She had been working.</li>
+    </ul>
+
+    <div class="note-box">
+      <p>The overall system stays compact because the same four aspect formulas and the same negative/question rules are reused across all twelve tense combinations.</p>
+    </div>
+
+    <h3>References from the source document</h3>
+    <table class="refs-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><a href="https://www.grammarly.com/blog/parts-of-speech/verb-tenses/" target="_blank" rel="noreferrer">Verb Tenses Explained, with Examples - Grammarly</a></td></tr>
+        <tr><td>2</td><td><a href="https://english.lingolia.com/en/grammar/tenses/overview" target="_blank" rel="noreferrer">Table of Verb Tenses in English Grammar</a></td></tr>
+        <tr><td>3</td><td><a href="https://www.geeksforgeeks.org/english/tense-chart/" target="_blank" rel="noreferrer">Tense Chart in English - GeeksforGeeks</a></td></tr>
+        <tr><td>4</td><td><a href="https://www.esllessonhandouts.com/handout/english-verb-tense-and-aspect-chart-1/" target="_blank" rel="noreferrer">English Verb Tense and Aspect Chart 1 - ESL Lesson Handouts</a></td></tr>
+        <tr><td>5</td><td><a href="https://www.ego4u.com/en/cram-up/grammar/tenses" target="_blank" rel="noreferrer">Table of English Tenses - English Grammar Online</a></td></tr>
+        <tr><td>6</td><td><a href="https://www.perfect-english-grammar.com/support-files/all_tenses_form_cheatsheet.pdf" target="_blank" rel="noreferrer">The basic forms of the English verb tenses</a></td></tr>
+        <tr><td>7</td><td><a href="https://www.csn.edu/sites/default/files/documents/cas-services/verb_tense_chart.pdf" target="_blank" rel="noreferrer">Verb Tense Chart</a></td></tr>
+        <tr><td>8</td><td><a href="https://english-resource.com/grammar/progressive-tense/" target="_blank" rel="noreferrer">Progressive Tense: Correct and Incorrect Usage | English Resource</a></td></tr>
+        <tr><td>9</td><td><a href="https://www.insightstoenglish.com/grammar-topic/tenses/progressive-continuous" target="_blank" rel="noreferrer">Progressive/Continuous - Insights to English</a></td></tr>
+        <tr><td>10</td><td><a href="https://en.wikipedia.org/wiki/Continuous_and_progressive_aspects" target="_blank" rel="noreferrer">Continuous and progressive aspects - Wikipedia</a></td></tr>
+        <tr><td>11</td><td><a href="https://www.grammarly.com/blog/grammar/present-perfect-tense/" target="_blank" rel="noreferrer">What Is the Present Perfect Tense? - Grammarly</a></td></tr>
+        <tr><td>12</td><td><a href="https://www.perfect-english-grammar.com/present-perfect-use.html" target="_blank" rel="noreferrer">Using The Present Perfect Tense in English</a></td></tr>
+        <tr><td>13</td><td><a href="https://www.englishpage.com/verbpage/presentperfect.html" target="_blank" rel="noreferrer">Present Perfect Tense | English Page</a></td></tr>
+        <tr><td>14</td><td><a href="https://www.youtube.com/watch?v=of0cS8ALFbo" target="_blank" rel="noreferrer">Progressive - Continuous Tenses (Past, Present, Future)</a></td></tr>
+        <tr><td>15</td><td><a href="https://www.scribbr.com/verbs/present-perfect/" target="_blank" rel="noreferrer">Present Perfect Tense | Scribbr</a></td></tr>
+        <tr><td>16</td><td><a href="https://www.ef.com/wwen/english-resources/english-grammar/present-perfect/" target="_blank" rel="noreferrer">Present perfect | EF Global Site</a></td></tr>
+        <tr><td>17</td><td><a href="https://lingbase.com/en/english/grammar/past-simple-negative-and-questions" target="_blank" rel="noreferrer">Past simple, negative and question forms - Lingbase</a></td></tr>
+        <tr><td>18</td><td><a href="https://en.wikipedia.org/wiki/Subject%E2%80%93auxiliary_inversion" target="_blank" rel="noreferrer">Subject-auxiliary inversion - Wikipedia</a></td></tr>
+        <tr><td>19</td><td><a href="https://www.perfect-english-grammar.com/inversion.html" target="_blank" rel="noreferrer">Inversion - Perfect English Grammar</a></td></tr>
+        <tr><td>20</td><td><a href="https://blog.aaaenos.com/chart-of-tenses-rules-examples-tenses-type-table/" target="_blank" rel="noreferrer">Chart of Tenses With Rules and Examples</a></td></tr>
+        <tr><td>21</td><td><a href="https://englishspeaking360.com/all-12-english-verb-tenses-explained-present-past-future-affirmative-form-negative-form-affirmative-question-form-negative-question-form/" target="_blank" rel="noreferrer">All 12 English Verb Tenses Explained</a></td></tr>
+        <tr><td>22</td><td><a href="https://continuingstudies.uvic.ca/elc/studyzone/330/grammar/pastnq" target="_blank" rel="noreferrer">Simple Past: Negatives and Questions - UVic</a></td></tr>
+        <tr><td>23</td><td><a href="https://speakspeak.com/english-grammar-exercises/elementary/present-simple-questions-negatives-do-dont-doesnt-practice-2" target="_blank" rel="noreferrer">Present simple questions, negatives - speakspeak</a></td></tr>
+        <tr><td>24</td><td><a href="https://www.scribd.com/document/414721584/Tense-Rule-Chart" target="_blank" rel="noreferrer">Tense Rule Chart: Affirmative, Negative, Interrogative</a></td></tr>
+        <tr><td>25</td><td><a href="https://farzanasrnmc.files.wordpress.com/2017/08/tense-chart.pdf" target="_blank" rel="noreferrer">Tense Use Formula Examples</a></td></tr>
+        <tr><td>26</td><td><a href="https://www.grammaring.com/subject-auxiliary-inversion-in-questions" target="_blank" rel="noreferrer">Subject-auxiliary inversion in questions - Grammaring</a></td></tr>
+        <tr><td>27</td><td><a href="https://www.bitgab.com/english-grammar/inversion-subject-auxiliary" target="_blank" rel="noreferrer">Inversion (subject-auxiliary) - BitGab</a></td></tr>
+        <tr><td>28</td><td><a href="https://englishlessonsbrighton.co.uk/all-english-tenses-timeline-infographic/" target="_blank" rel="noreferrer">All the English tenses: timeline infographic</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch7')">← <div><span class="nav-ch">Chapter 7</span>Integrated chart</div></button>
+    <button class="nav-btn disabled">End of Guide</button>
+  </div>
+</div>
+
+</main>
+
+<script>
+  const chapterOrder = ['overview','ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8'];
+
+  function showChapter(id, btn) {
+    document.querySelectorAll('.chapter-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.chapter-link').forEach(l => l.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo(0, 0);
+    if (btn) {
+      const list = btn.closest('.chapter-list');
+      if (list && !list.classList.contains('open')) {
+        list.classList.add('open');
+        const toggle = list.previousElementSibling;
+        if (toggle) toggle.classList.add('open');
+      }
+    }
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (window.innerWidth <= 800 && sidebar && sidebar.classList.contains('sidebar-open')) {
+      sidebar.classList.remove('sidebar-open');
+      document.body.classList.remove('sidebar-open');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function showChapterById(id) {
+    const btn = document.querySelector(`.chapter-link[onclick="showChapter('${id}', this)"]`);
+    showChapter(id, btn);
+  }
+
+  function togglePart(btn) {
+    btn.classList.toggle('open');
+    const list = btn.nextElementSibling;
+    list.classList.toggle('open');
+  }
+
+  (function () {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (!sidebar || !toggleBtn) return;
+
+    function toggleSidebar() {
+      const isOpen = sidebar.classList.toggle('sidebar-open');
+      document.body.classList.toggle('sidebar-open', isOpen);
+      toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    toggleBtn.addEventListener('click', toggleSidebar);
+  })();
+</script>
+</body>
+</html>
