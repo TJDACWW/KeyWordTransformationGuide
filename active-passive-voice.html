@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Articles: a, an, the, and the Zero Article</title>
+<title>Active and Passive Voice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -79,7 +79,6 @@
   }
 
   .sidebar-nav { flex: 1; padding: 10px 0 30px; }
-
   .guide-group, .part-group { border-bottom: 1px solid #243649; }
   .guide-group { padding-bottom: 8px; margin-bottom: 8px; }
 
@@ -133,9 +132,7 @@
     transition: all 0.15s;
     width: 100%;
   }
-  .chapter-link {
-    padding: 7px 20px 7px 28px;
-  }
+  .chapter-link { padding: 7px 20px 7px 28px; }
   .guide-link:hover,
   .chapter-link:hover {
     background: var(--sidebar-hover);
@@ -259,41 +256,40 @@
     background: var(--paper);
     border-radius: 0 4px 4px 0;
   }
-  .article-pill {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    background: #e8e2d8;
-    color: var(--accent);
-  }
 
-  .article-table {
+  .voice-table {
     width: 100%;
     border-collapse: collapse;
     margin: 18px 0 24px;
     font-size: 15px;
   }
-  .article-table th, .article-table td {
+  .voice-table th, .voice-table td {
     border: 1px solid var(--border);
     padding: 10px 12px;
     vertical-align: top;
   }
-  .article-table th {
+  .voice-table th {
     background: var(--table-head);
     text-align: left;
     font-weight: 600;
   }
-  .article-table td { background: var(--paper); }
+  .voice-table td { background: var(--paper); }
 
-  .pattern-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    margin: 18px 0 8px;
-    color: var(--blue-note);
+  .pair-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 18px 0 24px;
+  }
+  .pair-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .pair-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
   }
 
   .chapter-body hr {
@@ -383,6 +379,7 @@
     .chapter-header, .chapter-body { padding-left: 28px; padding-right: 28px; }
     .chapter-header h2 { font-size: 26px; }
     .panel-nav { padding: 24px 28px 48px; }
+    .pair-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -394,8 +391,8 @@
 
 <nav id="sidebar">
   <div class="sidebar-title">
-    <h1>English Articles</h1>
-    <p>a, an, the, and zero article</p>
+    <h1>Active and Passive Voice</h1>
+    <p>same event, different focus</p>
   </div>
 
   <div class="sidebar-nav">
@@ -406,8 +403,8 @@
       <div class="guide-links open">
         <a class="guide-link" href="index.html">Key Word Transformations</a>
         <a class="guide-link" href="tense-building-blocks.html">English Tense Building Blocks</a>
-        <a class="guide-link active" href="english-articles.html" aria-current="page">English Articles</a>
-        <a class="guide-link" href="active-passive-voice.html">Active and Passive Voice</a>
+        <a class="guide-link" href="english-articles.html">English Articles</a>
+        <a class="guide-link active" href="active-passive-voice.html" aria-current="page">Active and Passive Voice</a>
       </div>
     </div>
 
@@ -422,26 +419,38 @@
         </button>
         <button class="chapter-link" onclick="showChapter('ch1', this)">
           <span class="ch-num">Chapter 1</span>
-          a / an
+          What active and passive mean
         </button>
         <button class="chapter-link" onclick="showChapter('ch2', this)">
           <span class="ch-num">Chapter 2</span>
-          the
+          How to form the passive
         </button>
         <button class="chapter-link" onclick="showChapter('ch3', this)">
           <span class="ch-num">Chapter 3</span>
-          Zero article
+          Passive across common tenses
         </button>
         <button class="chapter-link" onclick="showChapter('ch4', this)">
           <span class="ch-num">Chapter 4</span>
-          Quick decision table
+          When to use active voice
         </button>
         <button class="chapter-link" onclick="showChapter('ch5', this)">
           <span class="ch-num">Chapter 5</span>
-          Practical revision strategy
+          When to use passive voice
         </button>
         <button class="chapter-link" onclick="showChapter('ch6', this)">
           <span class="ch-num">Chapter 6</span>
+          Be-passive vs get-passive
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch7', this)">
+          <span class="ch-num">Chapter 7</span>
+          True passive vs stative be + V3
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch8', this)">
+          <span class="ch-num">Chapter 8</span>
+          Quick checklist
+        </button>
+        <button class="chapter-link" onclick="showChapter('ch9', this)">
+          <span class="ch-num">Chapter 9</span>
           References
         </button>
       </div>
@@ -454,205 +463,253 @@
 <div id="panel-overview" class="chapter-panel active">
   <div class="chapter-header">
     <div class="part-label">Overview</div>
-    <h2>Articles in English</h2>
+    <h2>Active and Passive Voice</h2>
   </div>
   <div class="chapter-body">
-    <p class="intro-lead">Articles help the listener work out whether a noun is specific or general.</p>
-    <p>There are three articles <span class="article-pill">a</span> <span class="article-pill">an</span> <span class="article-pill">the</span>, plus the zero article <span class="article-pill">Ø</span> when we use no article at all.</p>
+    <p class="intro-lead">The event stays the same. The grammar only changes the focus.</p>
+    <p>In active voice, the doer is the subject. In passive voice, the receiver of the action becomes the subject.</p>
     <div class="note-box">
-      <p>Ask a simple question every time you see a noun: am I talking about this thing in general, or about a specific one?</p>
+      <p>Use this guide to decide whether you want to foreground the doer, the action, the result, or the person or thing affected by the action.</p>
     </div>
-    <p>This guide breaks the system into chapters so the rules are easier to revise and compare.</p>
   </div>
   <div class="panel-nav">
     <button class="nav-btn disabled">← Previous</button>
-    <button class="nav-btn" onclick="showChapterById('ch1')"><div><span class="nav-ch">Chapter 1</span>a / an</div> →</button>
+    <button class="nav-btn" onclick="showChapterById('ch1')"><div><span class="nav-ch">Chapter 1</span>Meaning</div> →</button>
   </div>
 </div>
 
 <div id="panel-ch1" class="chapter-panel">
   <div class="chapter-header">
     <div class="part-label">Chapter 1</div>
-    <h2>Indefinite Articles: a / an</h2>
+    <h2>What Active and Passive Mean</h2>
   </div>
   <div class="chapter-body">
-    <h3>Form</h3>
-    <p>Use <strong>a</strong> before a consonant sound and <strong>an</strong> before a vowel sound. The sound matters, not the spelling.</p>
-    <div class="formula-box">
-      <p><code>a</code> dog, <code>a</code> university, <code>an</code> apple, <code>an</code> hour</p>
+    <div class="pair-grid">
+      <div class="pair-card">
+        <h4>Active voice</h4>
+        <p>The subject does the action.</p>
+        <p><strong>Structure:</strong> Subject + verb + object</p>
+        <p class="example-sentence">The chef cooked the meal.</p>
+      </div>
+      <div class="pair-card">
+        <h4>Passive voice</h4>
+        <p>The subject receives the action.</p>
+        <p><strong>Structure:</strong> Subject + be + past participle (+ by + agent)</p>
+        <p class="example-sentence">The meal was cooked by the chef.</p>
+      </div>
     </div>
-
-    <h3>Main uses</h3>
-    <ol>
-      <li><strong>First mention</strong> of a singular countable noun: I saw a girl in the park.</li>
-      <li><strong>One, but not which one</strong>: I need a pen.</li>
-      <li><strong>Jobs and roles</strong>: She is a doctor.</li>
-      <li><strong>Classifying something</strong>: Paris is a beautiful city.</li>
-      <li><strong>Exclamations after what</strong>: What a day!</li>
-    </ol>
-
-    <h3>When not to use a / an</h3>
-    <ul>
-      <li>Plural nouns in general: Books are expensive.</li>
-      <li>Uncountable nouns in general: Water is essential.</li>
-      <li>Proper names: London, Italy, John.</li>
-    </ul>
-    <p>You can use <strong>a / an</strong> with an uncountable noun when you mean a type or a serving: a coffee, a wine, a knowledge of...</p>
+    <p>The event is the same; the difference is the sentence focus and the order of the words.</p>
   </div>
   <div class="panel-nav">
     <button class="nav-btn" onclick="showChapterById('overview')">← <div><span class="nav-ch">Overview</span>Big picture</div></button>
-    <button class="nav-btn" onclick="showChapterById('ch2')"><div><span class="nav-ch">Chapter 2</span>the</div> →</button>
+    <button class="nav-btn" onclick="showChapterById('ch2')"><div><span class="nav-ch">Chapter 2</span>Mechanics</div> →</button>
   </div>
 </div>
 
 <div id="panel-ch2" class="chapter-panel">
   <div class="chapter-header">
     <div class="part-label">Chapter 2</div>
-    <h2>Definite Article: the</h2>
+    <h2>How to Form the Passive</h2>
   </div>
   <div class="chapter-body">
-    <h3>Core meaning</h3>
-    <p><strong>The</strong> points to something specific or known. The listener can identify the noun from context, previous mention, world knowledge, or a phrase that makes it specific.</p>
-    <ul>
-      <li>Second mention: I bought a pen. The pen is black.</li>
-      <li>Shared situation: Close the window.</li>
-      <li>Unique things: the sun, the moon, the Earth.</li>
-    </ul>
-
-    <h3>Common patterns</h3>
+    <h3>The core steps</h3>
     <ol>
-      <li>Noun already mentioned or defined.</li>
-      <li>A phrase makes the noun specific: the mother of the child.</li>
-      <li>Superlatives and ordinals: the best student, the first chapter.</li>
-      <li>A whole specific group: the rich, the elderly.</li>
-      <li>Specific uncountables: pass the salt.</li>
-      <li>Many geographic names: the Nile, the Alps, the United States.</li>
+      <li>Identify the subject, verb, and object in the active sentence.</li>
+      <li>Make the old object the new subject.</li>
+      <li>Choose the correct form of <strong>be</strong> for the tense.</li>
+      <li>Add the past participle of the main verb.</li>
+      <li>Add <strong>by + agent</strong> if you want to name the doer.</li>
     </ol>
 
-    <h3>When not to use the</h3>
-    <p>Do not use <strong>the</strong> for general plurals, general uncountables, or most proper names.</p>
-    <p class="example-sentence">Dogs are friendly animals. Music helps me relax. John lives in France.</p>
+    <div class="formula-box">
+      <p><code>Active</code>: Subject + verb + object</p>
+      <p><code>Passive</code>: Subject (old object) + be + V3 (+ by + agent)</p>
+    </div>
+
+    <p class="example-sentence">The chef cooked the meal. → The meal was cooked by the chef.</p>
   </div>
   <div class="panel-nav">
-    <button class="nav-btn" onclick="showChapterById('ch1')">← <div><span class="nav-ch">Chapter 1</span>a / an</div></button>
-    <button class="nav-btn" onclick="showChapterById('ch3')"><div><span class="nav-ch">Chapter 3</span>Zero article</div> →</button>
+    <button class="nav-btn" onclick="showChapterById('ch1')">← <div><span class="nav-ch">Chapter 1</span>Meaning</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch3')"><div><span class="nav-ch">Chapter 3</span>Tenses</div> →</button>
   </div>
 </div>
 
 <div id="panel-ch3" class="chapter-panel">
   <div class="chapter-header">
     <div class="part-label">Chapter 3</div>
-    <h2>Zero Article: Ø</h2>
+    <h2>Passive Across Common Tenses</h2>
   </div>
   <div class="chapter-body">
-    <p>The zero article means no article before the noun. That absence itself carries meaning.</p>
-
-    <h3>General plurals and uncountables</h3>
-    <ul>
-      <li>Plural, general: Computers revolutionized communication.</li>
-      <li>Uncountable, general: Water is essential.</li>
-    </ul>
-
-    <h3>Proper names</h3>
-    <p>Most proper nouns do not take an article: John, London, France, Japan, Asia, Lake Michigan, Mount Everest.</p>
-    <p>But some names take <strong>the</strong>: the United States, the Netherlands, the Himalayas.</p>
-
-    <h3>Other common zero-article patterns</h3>
-    <ul>
-      <li>Languages and academic subjects: Spanish, history.</li>
-      <li>Meals: lunch, dinner.</li>
-      <li>Institutions used for their main purpose: school, hospital.</li>
-      <li>Transport and routine expressions: by car, on foot, at home, to work.</li>
-    </ul>
+    <p>The tense stays the same, but the passive moves that tense onto <strong>be</strong>. The main verb stays in the past participle.</p>
+    <table class="voice-table">
+      <thead>
+        <tr>
+          <th>Active tense</th>
+          <th>Active example</th>
+          <th>Passive form</th>
+          <th>Passive example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Present simple</td><td>They make cars.</td><td>am/is/are + V3</td><td>Cars are made.</td></tr>
+        <tr><td>Past simple</td><td>They made cars.</td><td>was/were + V3</td><td>Cars were made.</td></tr>
+        <tr><td>Present continuous</td><td>They are making cars.</td><td>am/is/are being + V3</td><td>Cars are being made.</td></tr>
+        <tr><td>Past continuous</td><td>They were making cars.</td><td>was/were being + V3</td><td>Cars were being made.</td></tr>
+        <tr><td>Present perfect</td><td>They have made cars.</td><td>has/have been + V3</td><td>Cars have been made.</td></tr>
+        <tr><td>Past perfect</td><td>They had made cars.</td><td>had been + V3</td><td>Cars had been made.</td></tr>
+        <tr><td>Future with will</td><td>They will make cars.</td><td>will be + V3</td><td>Cars will be made.</td></tr>
+      </tbody>
+    </table>
   </div>
   <div class="panel-nav">
-    <button class="nav-btn" onclick="showChapterById('ch2')">← <div><span class="nav-ch">Chapter 2</span>the</div></button>
-    <button class="nav-btn" onclick="showChapterById('ch4')"><div><span class="nav-ch">Chapter 4</span>Decision table</div> →</button>
+    <button class="nav-btn" onclick="showChapterById('ch2')">← <div><span class="nav-ch">Chapter 2</span>Mechanics</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch4')"><div><span class="nav-ch">Chapter 4</span>Use active</div> →</button>
   </div>
 </div>
 
 <div id="panel-ch4" class="chapter-panel">
   <div class="chapter-header">
     <div class="part-label">Chapter 4</div>
-    <h2>Quick Decision Table</h2>
+    <h2>When to Use Active Voice</h2>
   </div>
   <div class="chapter-body">
-    <p>Use this table as a fast check when you are choosing an article.</p>
-    <table class="article-table">
-      <thead>
-        <tr>
-          <th>Noun type / context</th>
-          <th>Article choice</th>
-          <th>Example</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Singular, countable, first mention, non-specific</td><td>a / an</td><td>I saw a dog in the park.</td></tr>
-        <tr><td>Singular, countable, now specific or known</td><td>the</td><td>The dog was friendly.</td></tr>
-        <tr><td>Singular, countable, general type</td><td>a / an</td><td>She is an architect.</td></tr>
-        <tr><td>Plural, general</td><td>Ø</td><td>Dogs are friendly.</td></tr>
-        <tr><td>Plural, specific group</td><td>the</td><td>The dogs in my street are noisy.</td></tr>
-        <tr><td>Uncountable, general</td><td>Ø</td><td>Music helps me relax.</td></tr>
-        <tr><td>Uncountable, specific amount/context</td><td>the</td><td>Close the window; the music is too loud.</td></tr>
-        <tr><td>Proper names (most)</td><td>Ø</td><td>I live in Italy.</td></tr>
-        <tr><td>Some geographic names, groups</td><td>the</td><td>The Alps, the United States.</td></tr>
-      </tbody>
-    </table>
+    <p>Active voice is usually clearer, shorter, and more direct, so it is the default in most everyday, academic, and narrative writing.</p>
+    <ul>
+      <li>Use active when the doer is important and you want to highlight them.</li>
+      <li>Use active for lively, engaging writing such as stories, essays, and emails.</li>
+      <li>Use active for instructions and requests when it sounds natural.</li>
+    </ul>
+    <p class="example-sentence">Researchers discovered a new species. The committee rejected the proposal. Please fill in the form.</p>
   </div>
   <div class="panel-nav">
-    <button class="nav-btn" onclick="showChapterById('ch3')">← <div><span class="nav-ch">Chapter 3</span>Zero article</div></button>
-    <button class="nav-btn" onclick="showChapterById('ch5')"><div><span class="nav-ch">Chapter 5</span>Revision strategy</div> →</button>
+    <button class="nav-btn" onclick="showChapterById('ch3')">← <div><span class="nav-ch">Chapter 3</span>Tenses</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch5')"><div><span class="nav-ch">Chapter 5</span>Use passive</div> →</button>
   </div>
 </div>
 
 <div id="panel-ch5" class="chapter-panel">
   <div class="chapter-header">
     <div class="part-label">Chapter 5</div>
-    <h2>Practical Revision Strategy</h2>
+    <h2>When to Use Passive Voice</h2>
   </div>
   <div class="chapter-body">
-    <p>When you revise articles, train yourself to ask three questions for every noun.</p>
+    <p>Use passive when the receiver or the action matters more than the doer, or when the doer is unknown, obvious, irrelevant, or sensitive.</p>
     <ol>
-      <li>Is it countable or uncountable?</li>
-      <li>Am I talking about it in general or a specific one?</li>
-      <li>Is it singular, and do I mean one of many or this particular one?</li>
+      <li>Doer unknown or irrelevant.</li>
+      <li>Doer obvious or not worth repeating.</li>
+      <li>Focus on result or process.</li>
+      <li>Formal, scientific, or official style.</li>
+      <li>To avoid blaming or naming someone.</li>
     </ol>
-    <div class="note-box">
-      <p>If it is plural or uncountable in a general sense, the answer is often zero article. If it is specific, the answer is often the.</p>
-    </div>
-    <p>That three-question check is enough for most article decisions in ordinary English.</p>
+    <p class="example-sentence">Her wallet was stolen. Insulin was discovered in 1921. Mistakes were made.</p>
   </div>
   <div class="panel-nav">
-    <button class="nav-btn" onclick="showChapterById('ch4')">← <div><span class="nav-ch">Chapter 4</span>Decision table</div></button>
-    <button class="nav-btn" onclick="showChapterById('ch6')"><div><span class="nav-ch">Chapter 6</span>References</div> →</button>
+    <button class="nav-btn" onclick="showChapterById('ch4')">← <div><span class="nav-ch">Chapter 4</span>Use active</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch6')"><div><span class="nav-ch">Chapter 6</span>Get-passive</div> →</button>
   </div>
 </div>
 
 <div id="panel-ch6" class="chapter-panel">
   <div class="chapter-header">
     <div class="part-label">Chapter 6</div>
-    <h2>References</h2>
+    <h2>Be-Passive vs Get-Passive</h2>
   </div>
   <div class="chapter-body">
-    <p>The source content referenced the following resources.</p>
-    <div class="footnotes">
-      <p><a href="https://www.planetspark.in/english-grammar/definite-and-indefinite-articles" target="_blank" rel="noreferrer">PlanetSpark - definite and indefinite articles</a></p>
-      <p><a href="https://blog.wordvice.com/topic/language-rules/articles/" target="_blank" rel="noreferrer">Wordvice - articles</a></p>
-      <p><a href="https://www.wallstreetenglish.com/exercises/the-complete-guide-to-definite-and-indefinite-articles/" target="_blank" rel="noreferrer">Wall Street English - definite and indefinite articles</a></p>
-      <p><a href="https://www.myenglishpages.com/grammar-lesson-articles/" target="_blank" rel="noreferrer">My English Pages - articles</a></p>
-      <p><a href="https://academicmarker.com/grammar-practice/words/word-types/determiners/articles/what-are-the-rules-for-using-zero-articles-in-english/" target="_blank" rel="noreferrer">Academic Marker - zero article rules</a></p>
-      <p><a href="https://prepedu.com/en/blog/article-a-an-the" target="_blank" rel="noreferrer">PrepEdu - article a, an, the</a></p>
-      <p><a href="https://alf-tool.monash.edu/english_language_use/files/articles.pdf" target="_blank" rel="noreferrer">Monash ALF tool - articles PDF</a></p>
-      <p><a href="https://oxfordlanguageclub.com/page/blog/grammar-zero-article-when-to-omit-articles" target="_blank" rel="noreferrer">Oxford Language Club - zero article</a></p>
-      <p><a href="https://speakenglishbyyourself.com/zero-article-in-english/" target="_blank" rel="noreferrer">Speak English By Yourself - zero article</a></p>
-      <p><a href="https://www.englishclub.com/grammar/determiners-zero-article.php" target="_blank" rel="noreferrer">EnglishClub - zero article</a></p>
-      <p><a href="https://langeek.co/en/grammar/course/608/zero-article" target="_blank" rel="noreferrer">Langeek - zero article</a></p>
-      <p><a href="https://www.berlitz.com/blog/definite-indefinite-articles-english" target="_blank" rel="noreferrer">Berlitz - definite and indefinite articles</a></p>
-      <p><a href="https://www.moose.it/zero-article-in-english-grammar/" target="_blank" rel="noreferrer">Moose - zero article in English grammar</a></p>
+    <div class="pair-grid">
+      <div class="pair-card">
+        <h4>Be-passive</h4>
+        <p>be + V3</p>
+        <p>Neutral and common in written or academic English.</p>
+        <p class="example-sentence">My phone was stolen.</p>
+      </div>
+      <div class="pair-card">
+        <h4>Get-passive</h4>
+        <p>get + V3</p>
+        <p>More informal, often spoken, and often suggests a change or event.</p>
+        <p class="example-sentence">My phone got stolen. She got promoted last year.</p>
+      </div>
+    </div>
+    <p>Use get-passive only with action verbs. It is not natural with stative meanings such as know or believe.</p>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch5')">← <div><span class="nav-ch">Chapter 5</span>Use passive</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch7')"><div><span class="nav-ch">Chapter 7</span>Stative be + V3</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch7" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 7</div>
+    <h2>True Passive vs Stative Be + V3</h2>
+  </div>
+  <div class="chapter-body">
+    <p>Sometimes be + past participle describes a state rather than an event. That is often called a stative passive.</p>
+    <div class="pair-grid">
+      <div class="pair-card">
+        <h4>Event passive</h4>
+        <p>Focuses on what happened.</p>
+        <p class="example-sentence">The window was broken by a boy.</p>
+      </div>
+      <div class="pair-card">
+        <h4>Stative result</h4>
+        <p>Describes the current condition.</p>
+        <p class="example-sentence">The window is broken.</p>
+      </div>
+    </div>
+    <p>The stative reading behaves more like a descriptive state, similar to be + adjective.</p>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch6')">← <div><span class="nav-ch">Chapter 6</span>Get-passive</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch8')"><div><span class="nav-ch">Chapter 8</span>Checklist</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch8" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 8</div>
+    <h2>Quick Checklist</h2>
+  </div>
+  <div class="chapter-body">
+    <ol>
+      <li>What is more important, the doer or what happened?</li>
+      <li>Is the doer unknown, obvious, or sensitive?</li>
+      <li>Is the text formal, scientific, or official?</li>
+      <li>Would passive make the sentence clearer, or would active be shorter and more direct?</li>
+    </ol>
+    <div class="note-box">
+      <p>Use active by default unless you have a reason to choose passive.</p>
     </div>
   </div>
   <div class="panel-nav">
-    <button class="nav-btn" onclick="showChapterById('ch5')">← <div><span class="nav-ch">Chapter 5</span>Revision strategy</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch7')">← <div><span class="nav-ch">Chapter 7</span>Stative be + V3</div></button>
+    <button class="nav-btn" onclick="showChapterById('ch9')"><div><span class="nav-ch">Chapter 9</span>References</div> →</button>
+  </div>
+</div>
+
+<div id="panel-ch9" class="chapter-panel">
+  <div class="chapter-header">
+    <div class="part-label">Chapter 9</div>
+    <h2>References</h2>
+  </div>
+  <div class="chapter-body">
+    <div class="footnotes">
+      <p><a href="https://www.vedantu.com/english/active-and-passive-voice" target="_blank" rel="noreferrer">Vedantu - active and passive voice</a></p>
+      <p><a href="https://www.grammarly.com/blog/sentences/active-vs-passive-voice/" target="_blank" rel="noreferrer">Grammarly - active vs passive voice</a></p>
+      <p><a href="https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/active-passive-voice" target="_blank" rel="noreferrer">British Council LearnEnglish - active/passive voice</a></p>
+      <p><a href="https://dictionary.cambridge.org/grammar/british-grammar/passive-voice" target="_blank" rel="noreferrer">Cambridge Grammar - passive voice</a></p>
+      <p><a href="https://www.planetspark.in/english-grammar/100-examples-of-active-and-passive-voice" target="_blank" rel="noreferrer">PlanetSpark - active/passive examples</a></p>
+      <p><a href="https://www.grammarly.com/blog/grammar/passive-voice/" target="_blank" rel="noreferrer">Grammarly - passive voice</a></p>
+      <p><a href="https://ielts.idp.com/prepare/article-when-to-use-the-passive-voice" target="_blank" rel="noreferrer">IELTS IDP - when to use passive voice</a></p>
+      <p><a href="https://www.busuu.com/en/english/passive-voice" target="_blank" rel="noreferrer">Busuu - passive voice</a></p>
+      <p><a href="https://advice.writing.utoronto.ca/revising/passive-voice/" target="_blank" rel="noreferrer">University of Toronto Writing Advice - passive voice</a></p>
+      <p><a href="https://www.yourworldinenglish.com/blog/be-vs-get-passive" target="_blank" rel="noreferrer">Your World in English - be vs get passive</a></p>
+      <p><a href="https://learningenglish.voanews.com/a/the-passive-voice-with-get-/4839624.html" target="_blank" rel="noreferrer">VOA Learning English - get passive</a></p>
+      <p><a href="https://www.grammar-quizzes.com/passive2.html" target="_blank" rel="noreferrer">Grammar Quizzes - get passive</a></p>
+      <p><a href="https://eslgold.com/grammar/stative-passives/" target="_blank" rel="noreferrer">ESL Gold - stative passives</a></p>
+    </div>
+  </div>
+  <div class="panel-nav">
+    <button class="nav-btn" onclick="showChapterById('ch8')">← <div><span class="nav-ch">Chapter 8</span>Checklist</div></button>
     <button class="nav-btn disabled">End of Guide</button>
   </div>
 </div>
@@ -660,7 +717,7 @@
 </main>
 
 <script>
-  const chapterOrder = ['overview','ch1','ch2','ch3','ch4','ch5','ch6'];
+  const chapterOrder = ['overview','ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8','ch9'];
 
   function showChapter(id, btn) {
     document.querySelectorAll('.chapter-panel').forEach(p => p.classList.remove('active'));
