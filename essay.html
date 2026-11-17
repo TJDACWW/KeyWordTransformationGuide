@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B2 First Essay — Task Lab</title>
+  <style>
+    :root {
+      --paper: #f4efe6;
+      --card: #fffdf9;
+      --ink: #1a1917;
+      --muted: #6b655c;
+      --accent: #c84b31;
+      --sage: #2d6a4f;
+      --ochre: #b45309;
+      --line: #d6cfc2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 18px 72px;
+    }
+
+    /* Editorial Masthead */
+    .masthead {
+      border-top: 3px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: 18px 0 0;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .tab-btn {
+      cursor: pointer;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 10px 16px;
+      border: 1px solid var(--ink);
+      border-bottom: none;
+      background: #e8e1d3;
+      color: var(--ink);
+      transition: background 0.15s;
+    }
+
+    .tab-btn.active {
+      background: var(--card);
+      font-weight: 700;
+      position: relative;
+      top: 1px;
+      padding-bottom: 11px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    button.action {
+      cursor: pointer;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 7px 12px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--card);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    button.action:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    button.ghost {
+      background: var(--card);
+      color: var(--ink);
+    }
+
+    /* Section Blocks */
+    .lesson-block {
+      background: var(--card);
+      border: 1px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 22px;
+      margin-bottom: 26px;
+    }
+
+    .block-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .block-head h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+    }
+
+    /* Manual Word Highlighting */
+    .prompt-sheet {
+      background: #faf6ee;
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.02rem;
+      margin-bottom: 14px;
+      line-height: 1.8;
+    }
+
+    .word-btn {
+      cursor: pointer;
+      padding: 1px 2px;
+      border-radius: 2px;
+      transition: background 0.1s;
+    }
+
+    .word-btn:hover { background: #efe6d5; }
+    .word-btn.highlighted { background: #fde68a; font-weight: 600; }
+
+    /* Drag & Drop Card System */
+    .tray-label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .card-tray {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      min-height: 62px;
+      padding: 12px;
+      background: #f7f3eb;
+      border: 1px dashed var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .drag-card {
+      background: var(--card);
+      border: 1px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.1s, opacity 0.15s;
+    }
+
+    .drag-card:active { cursor: grabbing; }
+    .drag-card.dragging { opacity: 0.45; transform: scale(0.98); }
+    .drag-card.correct { border-color: var(--sage); background: #ecfdf5; box-shadow: 2px 2px 0 var(--sage); }
+    .drag-card.wrong { border-color: var(--accent); background: #fef2f2; box-shadow: 2px 2px 0 var(--accent); }
+
+    .columns-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .columns-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .drop-col {
+      border: 1px solid var(--ink);
+      background: #faf8f4;
+      min-height: 130px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+
+    .drop-col.over { background: #efe9dc; }
+
+    .col-title {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    /* Vertical Sortable Stack (Tab 4 Ex 1) */
+    .stack-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stack-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      padding: 10px 14px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .stack-item.dragging { opacity: 0.4; }
+    .stack-item.correct { border-color: var(--sage); background: #ecfdf5; box-shadow: 2px 2px 0 var(--sage); }
+    .stack-item.wrong { border-color: var(--accent); background: #fef2f2; box-shadow: 2px 2px 0 var(--accent); }
+
+    .stack-handle {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    /* Inputs & Tables */
+    .note-grid {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .note-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .note-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--ink);
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+
+    textarea { resize: vertical; line-height: 1.5; }
+
+    .item-row {
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--line);
+      display: grid;
+      gap: 8px;
+    }
+
+    .item-row:last-child { border-bottom: none; }
+
+    .status-msg {
+      margin-top: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      padding: 10px 12px;
+      display: none;
+    }
+
+    .status-msg.show { display: block; border: 1px solid var(--ink); background: #f7f3eb; }
+
+    /* Clickable Option Boxes (Tab 2 Ex 2) */
+    .choice-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .choice-box {
+      cursor: pointer;
+      padding: 6px 14px;
+      border: 1px solid var(--ink);
+      background: #faf8f4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      transition: all 0.1s;
+    }
+
+    .choice-box:hover { background: #efe9dc; }
+    .choice-box.selected { background: var(--ink); color: var(--card); font-weight: 700; }
+    .choice-box.correct { background: var(--sage); color: #fff; border-color: var(--sage); }
+    .choice-box.wrong { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Inline Error Spotter (Tab 2 Ex 1) */
+    .err-sentence {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .err-fix-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Inline Noun Replacement (Tab 4 Ex 2) */
+    .inline-select {
+      width: auto;
+      display: inline-block;
+      padding: 2px 6px;
+      margin: 0 3px;
+      font-weight: 600;
+      border: 1px solid var(--accent);
+      background: #fff5f2;
+    }
+
+    /* Vocab Deck */
+    .vocab-deck {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .vocab-card {
+      border: 1px solid var(--ink);
+      padding: 10px;
+      background: #faf8f4;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .vocab-card.picked {
+      background: #ecfdf5;
+      border-color: var(--sage);
+      box-shadow: 2px 2px 0 var(--sage);
+    }
+
+    .vocab-term {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .vocab-ex { font-size: 0.84rem; color: var(--muted); }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .radio-opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      background: #faf8f4;
+      cursor: pointer;
+    }
+
+    .word-counter {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 6px;
+      color: var(--sage);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <div class="kicker">Cambridge B2 First · Writing Workshop</div>
+      <h1>B2 Essay Task Lab</h1>
+      <nav class="tab-bar">
+        <button class="tab-btn active" onclick="openTab('tab1', this)">1. Decode the Task</button>
+        <button class="tab-btn" onclick="openTab('tab2', this)">2. Grammar Accuracy</button>
+        <button class="tab-btn" onclick="openTab('tab3', this)">3. Paragraph Structure</button>
+        <button class="tab-btn" onclick="openTab('tab4', this)">4. Cohesion &amp; Word Count</button>
+      </nav>
+    </header>
+
+    <!-- ==================== TAB 1: DECODE THE TASK ==================== -->
+    <div id="tab1" class="tab-panel active">
+      <section class="lesson-block">
+        <div class="block-head"><h2>1. Highlight the Requirements</h2></div>
+        <p>Click any words in the prompt below to highlight the <strong>question</strong>, the <strong>three notes</strong>, and the <strong>word limit</strong>.</p>
+        <div class="prompt-sheet" id="promptSheet"></div>
+        <button class="action ghost" onclick="clearHighlights('promptSheet')">Clear Highlights</button>
+        <button class="action ghost" onclick="toggleEl('key1')">Show Key Requirements</button>
+        <div id="key1" class="status-msg">
+          <strong>Key Requirements:</strong><br>
+          • Question: <em>Do you agree?</em><br>
+          • Notes: <em>1. studying</em>, <em>2. getting experience</em>, <em>3. exploitation (your own idea)</em><br>
+          • Word limit: <em>140–190 words</em>
+        </div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>2. Sort the Cards</h2></div>
+        <p>Drag each card from the tray into the correct column.</p>
+        <div class="tray-label">Card Tray</div>
+        <div class="card-tray drop-zone" id="tray2" data-zone="tray"></div>
+        <div class="columns-3">
+          <div class="drop-col drop-zone" data-zone="Must include"><div class="col-title">Must Include</div></div>
+          <div class="drop-col drop-zone" data-zone="Optional"><div class="col-title">Optional</div></div>
+          <div class="drop-col drop-zone" data-zone="Irrelevant"><div class="col-title">Irrelevant</div></div>
+        </div>
+        <button class="action" onclick="checkZoneGroup('sort2', 'msg2')">Check Sorting</button>
+        <button class="action ghost" onclick="resetZoneGroup('tray2', sort2Data, 'sort2')">Reset Cards</button>
+        <div id="msg2" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>3. Turn Notes into Questions</h2></div>
+        <p>Write one guiding question for each required note.</p>
+        <div class="note-grid">
+          <div class="note-row"><strong>1. Studying</strong><input type="text" placeholder="e.g. How can a part-time job affect studying?" /></div>
+          <div class="note-row"><strong>2. Experience</strong><input type="text" placeholder="e.g. What skills can teenagers gain?" /></div>
+          <div class="note-row"><strong>3. Exploitation</strong><input type="text" placeholder="e.g. What are the risks of exploitation?" /></div>
+        </div>
+        <button class="action ghost" onclick="toggleEl('sample3')">Toggle Sample Questions</button>
+        <div id="sample3" class="status-msg">
+          • Studying: How can a part-time job affect studying?<br>
+          • Getting experience: What experience or skills can teenagers gain?<br>
+          • Exploitation: What are the risks of exploitation for young workers?
+        </div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>4. Match Ideas to Notes</h2></div>
+        <p>Drag each idea card into the matching note, or into <strong>Reject</strong> if it is off-topic.</p>
+        <div class="tray-label">Idea Cards</div>
+        <div class="card-tray drop-zone" id="tray4" data-zone="tray"></div>
+        <div class="columns-4">
+          <div class="drop-col drop-zone" data-zone="Studying"><div class="col-title">1. Studying</div></div>
+          <div class="drop-col drop-zone" data-zone="Getting experience"><div class="col-title">2. Experience</div></div>
+          <div class="drop-col drop-zone" data-zone="Exploitation"><div class="col-title">3. Exploitation</div></div>
+          <div class="drop-col drop-zone" data-zone="Reject"><div class="col-title">Reject (Off-topic)</div></div>
+        </div>
+        <button class="action" onclick="checkZoneGroup('match4', 'msg4')">Check Matches</button>
+        <button class="action ghost" onclick="resetZoneGroup('tray4', match4Data, 'match4')">Reset Cards</button>
+        <div id="msg4" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>5. 5-Line Outline &amp; Target Vocabulary</h2></div>
+        <p>Draft short phrases only. Click at least <strong>3 vocabulary cards</strong> below to include in your homework.</p>
+        <div class="note-grid">
+          <div class="note-row"><strong>Introduction</strong><input type="text" placeholder="Topic + clear opinion" /></div>
+          <div class="note-row"><strong>Note 1: Studying</strong><input type="text" placeholder="Point + reason/example" /></div>
+          <div class="note-row"><strong>Note 2: Experience</strong><input type="text" placeholder="Point + reason/example" /></div>
+          <div class="note-row"><strong>Note 3: Exploitation</strong><input type="text" placeholder="Point + reason/example" /></div>
+          <div class="note-row"><strong>Conclusion</strong><input type="text" placeholder="Restate opinion" /></div>
+        </div>
+        <button class="action ghost" onclick="toggleEl('sample5')">Toggle Example Outline</button>
+        <div id="sample5" class="status-msg">
+          Introduction: I believe part-time jobs can be beneficial.<br>
+          Note 1: Studying — manage time, but school comes first.<br>
+          Note 2: Experience — gain skills, meet people, work under pressure.<br>
+          Note 3: Exploitation — low pay, long hours, unfair conditions.<br>
+          Conclusion: Useful if safe, fair, and balanced with study.
+        </div>
+        <div class="vocab-deck" id="vocabDeck"></div>
+      </section>
+
+      <section class="lesson-block" style="border-left: 6px solid var(--sage);">
+        <div class="block-head"><h2>Homework: New Essay Prompt</h2></div>
+        <p>Apply the same decoding and planning steps to this <strong>new task</strong>, then write a full essay of <strong>170–185 words</strong>. Include at least <strong>3 selected vocabulary items</strong> naturally.</p>
+        <div class="prompt-sheet" style="margin-bottom:0;">
+          <p style="margin-top:0;"><em>Some people say that schools should spend more time teaching practical life skills instead of academic subjects.</em></p>
+          <p>Do you agree?</p>
+          <p>Write about:<br>1. future careers<br>2. daily independence<br>3. <em>your own idea</em></p>
+          <p style="margin-bottom:0;">Write your answer in 140–190 words in an appropriate style.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 2: GRAMMAR ACCURACY ==================== -->
+    <div id="tab2" class="tab-panel">
+      <section class="lesson-block">
+        <div class="block-head"><h2>1. Spot &amp; Fix 8 Deliberate Errors</h2></div>
+        <p>Step 1: Click the <strong>faulty word(s)</strong> in each sentence. Step 2: Type the <strong>correction</strong> in the box and click Check.</p>
+        <div id="grammarFixList"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>2. Quick Choice: Articles, Prepositions &amp; Verb Forms</h2></div>
+        <p>Click the correct option box for each of the 10 items.</p>
+        <div id="quickChoiceList"></div>
+        <button class="action" onclick="checkQuickChoice()" style="margin-top:10px;">Check Answers</button>
+        <div id="qcMsg" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>3. Fix 3 Unclear Sentences</h2></div>
+        <p>Rewrite each unclear sentence in natural B2 English, then compare with the multiple suggested versions.</p>
+        <div class="item-row">
+          <div><strong>1.</strong> <em>"Is this point of view that don’t grant to have young people to work."</em></div>
+          <input type="text" placeholder="Rewrite clearly..." />
+        </div>
+        <div class="item-row">
+          <div><strong>2.</strong> <em>"Nobody can imagine a day without speak, tell or also call in for something happen."</em></div>
+          <input type="text" placeholder="Rewrite clearly..." />
+        </div>
+        <div class="item-row">
+          <div><strong>3.</strong> <em>"Also, they come across in authentic and trusted relationship."</em></div>
+          <input type="text" placeholder="Rewrite clearly..." />
+        </div>
+        <button class="action ghost" onclick="toggleEl('unclearKey')" style="margin-top:10px;">Show Suggested Versions</button>
+        <div id="unclearKey" class="status-msg">
+          <strong>1.</strong><br>
+          • <em>This is why some people oppose teenagers having part-time jobs.</em><br>
+          • <em>For this reason, many people believe young people should not work.</em><br><br>
+          <strong>2.</strong><br>
+          • <em>People communicate every day to share news, ask for help, and stay in touch.</em><br>
+          • <em>It is hard to imagine a day without messaging, calling, or talking to others.</em><br><br>
+          <strong>3.</strong><br>
+          • <em>They can also build genuine, trusting relationships.</em><br>
+          • <em>In addition, spending time together helps people form stronger and more authentic bonds.</em>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 3: PARAGRAPH STRUCTURE ==================== -->
+    <div id="tab3" class="tab-panel">
+      <section class="lesson-block">
+        <div class="block-head"><h2>1. Order the Cut-Up Paragraph</h2></div>
+        <p>Drag the 4 sentence cards into the correct order: <strong>Topic Sentence → Explanation → Example → Link</strong>.</p>
+        <div class="tray-label">Sentence Cards</div>
+        <div class="card-tray drop-zone" id="trayP1" data-zone="tray"></div>
+        <div class="columns-4">
+          <div class="drop-col drop-zone" data-zone="1. Topic"><div class="col-title">1. Topic Sentence</div></div>
+          <div class="drop-col drop-zone" data-zone="2. Explanation"><div class="col-title">2. Explanation</div></div>
+          <div class="drop-col drop-zone" data-zone="3. Example"><div class="col-title">3. Example</div></div>
+          <div class="drop-col drop-zone" data-zone="4. Link"><div class="col-title">4. Link</div></div>
+        </div>
+        <button class="action" onclick="checkZoneGroup('paraOrder', 'msgP1')">Check Order</button>
+        <button class="action ghost" onclick="resetZoneGroup('trayP1', paraOrderData, 'paraOrder')">Reset Cards</button>
+        <div id="msgP1" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>2. Identify the Topic Sentence</h2></div>
+        <p>Select the topic sentence in each short paragraph.</p>
+        <div class="item-row">
+          <div><strong>Paragraph A:</strong></div>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="tsA" value="1"> A part-time job helps teenagers develop essential life skills.</label>
+            <label class="radio-opt"><input type="radio" name="tsA" value="0"> For example, working in a café teaches them how to deal with customers.</label>
+            <label class="radio-opt"><input type="radio" name="tsA" value="0"> As a result, they become more confident and independent.</label>
+          </div>
+        </div>
+        <div class="item-row">
+          <div><strong>Paragraph B:</strong></div>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="tsB" value="0"> Without the internet, keeping regular contact would be much harder.</label>
+            <label class="radio-opt"><input type="radio" name="tsB" value="1"> Online communication is especially valuable for people who live far from their families.</label>
+            <label class="radio-opt"><input type="radio" name="tsB" value="0"> Video calls allow relatives to share daily moments despite the distance.</label>
+          </div>
+        </div>
+        <button class="action" onclick="checkTopicSentences()">Check Selection</button>
+        <div id="tsMsg" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>3. Match Supporting Sentences to Main Ideas</h2></div>
+        <p>Drag each supporting sentence card to the matching main idea.</p>
+        <div class="tray-label">Supporting Sentences</div>
+        <div class="card-tray drop-zone" id="traySupp" data-zone="tray"></div>
+        <div class="columns-3">
+          <div class="drop-col drop-zone" data-zone="Time Management"><div class="col-title">Time Management</div></div>
+          <div class="drop-col drop-zone" data-zone="Exploitation"><div class="col-title">Exploitation</div></div>
+          <div class="drop-col drop-zone" data-zone="Face-to-Face"><div class="col-title">Face-to-Face</div></div>
+        </div>
+        <button class="action" onclick="checkZoneGroup('suppMatch', 'msgSupp')">Check Matches</button>
+        <button class="action ghost" onclick="resetZoneGroup('traySupp', suppData, 'suppMatch')">Reset Cards</button>
+        <div id="msgSupp" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>4. Choose the Best Topic Sentence</h2></div>
+        <p>Read the supporting ideas: <em>"Some employers pay teenagers low wages while expecting them to work long hours. Therefore, young workers need clear legal protection."</em></p>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="bestTS" value="0"> Teenagers often spend their money on clothes and entertainment.</label>
+          <label class="radio-opt"><input type="radio" name="bestTS" value="1"> On the other hand, there is a serious risk of exploitation when teenagers work.</label>
+          <label class="radio-opt"><input type="radio" name="bestTS" value="0"> Studying for exams requires a quiet environment at home.</label>
+        </div>
+        <button class="action" onclick="checkBestTS()">Check Choice</button>
+        <div id="bestTSMsg" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>5. Add a Missing Explanation or Example</h2></div>
+        <p>Complete the paragraph below by writing one supporting explanation or example:</p>
+        <div class="prompt-sheet">
+          "Online communication is fast and convenient. <strong>[Add your explanation or example here]</strong>. However, it cannot fully replace meeting someone in person."
+        </div>
+        <input type="text" placeholder="e.g. For instance, a quick message or video call lets busy friends stay in touch..." />
+      </section>
+    </div>
+
+    <!-- ==================== TAB 4: COHESION & WORD COUNT ==================== -->
+    <div id="tab4" class="tab-panel">
+      <section class="lesson-block">
+        <div class="block-head"><h2>1. Reorder the Cut-Up Essay (Vertical Stack)</h2></div>
+        <p>Drag the cards <strong>up or down</strong> into a logical essay sequence (Introduction → Body 1 → Body 2 → Body 3 → Conclusion).</p>
+        <div class="stack-list" id="essayStack"></div>
+        <button class="action" onclick="checkStackOrder()">Check Sequence</button>
+        <div id="msgEssay" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>2. Replace Repeated Nouns</h2></div>
+        <p>Choose a pronoun or synonym from the inline boxes to avoid repeating the same noun.</p>
+        <div class="prompt-sheet" id="repExercise">
+          <p style="margin-top:0;">1. Many <strong>teenagers</strong> want a part-time job. However,
+            <select class="inline-select" data-ans="they">
+              <option value="">--</option><option value="they">they</option><option value="teenagers">teenagers</option>
+            </select>
+            must remember that studying comes first for
+            <select class="inline-select" data-ans="young people">
+              <option value="">--</option><option value="young people">young people</option><option value="teenagers">teenagers</option>
+            </select>.
+          </p>
+          <p>2. Online <strong>communication</strong> is convenient, and
+            <select class="inline-select" data-ans="it">
+              <option value="">--</option><option value="it">it</option><option value="communication">communication</option>
+            </select>
+            helps families stay close.
+          </p>
+          <p>3. Some <strong>employers</strong> pay low wages. For this reason,
+            <select class="inline-select" data-ans="these companies">
+              <option value="">--</option><option value="these companies">these companies</option><option value="employers">employers</option>
+            </select>
+            should be regulated.
+          </p>
+          <p style="margin-bottom:0;">4. Learning <strong>time management</strong> is useful because
+            <select class="inline-select" data-ans="this skill">
+              <option value="">--</option><option value="this skill">this skill</option><option value="time management">time management</option>
+            </select>
+            prepares students for university.
+          </p>
+        </div>
+        <button class="action" onclick="checkInlineReps()">Check Replacements</button>
+        <div id="repMsg" class="status-msg"></div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>3. Highlight Repetition &amp; Vague Phrases</h2></div>
+        <p>Click on any words that feel repetitive, vague, or unnecessary in this paragraph:</p>
+        <div class="prompt-sheet" id="vagueSheet"></div>
+        <button class="action ghost" onclick="clearHighlights('vagueSheet')">Clear Highlights</button>
+        <button class="action ghost" onclick="toggleEl('vagueKey')">Show Suggested Answers</button>
+        <div id="vagueKey" class="status-msg">
+          <strong>Repetitive / Vague Phrases to Cut:</strong><br>
+          • <em>"something without which it is impossible to live"</em> → vague &amp; wordy (replace with <em>"essential"</em>)<br>
+          • <em>"in modern society today"</em> → repetitive (<em>"Nowadays"</em> and <em>"today"</em> mean the same thing)<br>
+          • <em>"many different things and reasons every single day"</em> → vague filler (specify 1–2 concrete reasons instead)
+        </div>
+      </section>
+
+      <section class="lesson-block">
+        <div class="block-head"><h2>4. Choose the Best Shorter Version</h2></div>
+        <div id="shortList"></div>
+        <button class="action" onclick="checkShortAll()" style="margin-top:10px;">Check Choices</button>
+        <div id="shortMsg" class="status-msg"></div>
+      </section>
+
+<section class="lesson-block">
+  <div class="block-head"><h2>5. Trim a 220-Word Text to ~180 Words</h2></div>
+  <div class="prompt-sheet" style="margin-bottom:12px;">
+    <strong>Essay Prompt:</strong> <em>Some people think that cars should be banned from city centres. Do you agree?</em><br>
+    Write about: <strong>1.</strong> pollution &nbsp; <strong>2.</strong> public transport &nbsp; <strong>3.</strong> local businesses (your own idea)
+  </div>
+  <p>Delete repetition, cut vague filler, or combine sentences below to bring the word count between <strong>170 and 185 words</strong>.</p>
+  <textarea id="trimBox" rows="9" oninput="updateWordCount()">Nowadays, in modern society today, traffic in big cities has become a very serious problem that affects everyone. In my personal opinion, I completely agree that cars should be banned from city centres. First of all, banning cars would significantly reduce air pollution in the city. At the moment, there are far too many cars on the roads, and these cars produce dangerous exhaust fumes that are bad for people’s lungs and health. As a result, cleaner air would make the city centre a much healthier place to live and walk around. Furthermore, if cars are not allowed in the centre, governments will need to improve public transport. Buses and trains would have to be more frequent, reliable, and affordable for all citizens. When public transport is fast and convenient, people will be happy to leave their private vehicles at home. On the other hand, some shop owners worry that banning cars might be a threat to local businesses. They think that fewer customers will visit their shops. However, pedestrian-only streets often attract more shoppers who enjoy walking safely without traffic. In conclusion, to sum up everything I have said, banning cars from city centres is a great idea because it reduces pollution and encourages better public transport.</textarea>
+  <div class="word-counter" id="wcDisplay">Word count: 0 words</div>
+  <button class="action ghost" onclick="toggleEl('trimKey')" style="margin-top:10px;">Show Visual Comparison (~178 Words)</button>
+  <div id="trimKey" class="status-msg" style="line-height:1.7;">
+    <strong>Visual Diff (Red = Cut, Green = Tightened):</strong><br><br>
+    Nowadays, <span style="text-decoration:line-through;color:#c84b31;">in modern society today,</span> traffic in big cities has become a <span style="text-decoration:line-through;color:#c84b31;">very</span> serious problem <span style="text-decoration:line-through;color:#c84b31;">that affects everyone</span>. <span style="text-decoration:line-through;color:#c84b31;">In my personal opinion,</span> I completely agree that cars should be banned from city centres.<br><br>
+    First of all, <span style="color:#2d6a4f;font-weight:700;">this measure</span> <span style="text-decoration:line-through;color:#c84b31;">banning cars</span> would significantly reduce air pollution <span style="text-decoration:line-through;color:#c84b31;">in the city</span>. <span style="text-decoration:line-through;color:#c84b31;">At the moment, there are far too many cars on the roads, and these cars</span> <span style="color:#2d6a4f;font-weight:700;">Currently, vehicles</span> produce dangerous <span style="text-decoration:line-through;color:#c84b31;">exhaust</span> fumes that <span style="color:#2d6a4f;font-weight:700;">harm</span> <span style="text-decoration:line-through;color:#c84b31;">are bad for</span> people’s lungs <span style="text-decoration:line-through;color:#c84b31;">and health</span>. <span style="text-decoration:line-through;color:#c84b31;">As a result,</span> Cleaner air would make the city centre <span style="text-decoration:line-through;color:#c84b31;">a much</span> healthier <span style="text-decoration:line-through;color:#c84b31;">place</span> to live and walk around.<br><br>
+    Furthermore, <span style="color:#2d6a4f;font-weight:700;">banning cars</span> <span style="text-decoration:line-through;color:#c84b31;">if cars are not allowed in the centre, governments</span> would <span style="color:#2d6a4f;font-weight:700;">encourage</span> <span style="text-decoration:line-through;color:#c84b31;">need to improve</span> <span style="color:#2d6a4f;font-weight:700;">better</span> public transport. Buses and trains would have to be more frequent, reliable, and affordable <span style="text-decoration:line-through;color:#c84b31;">for all citizens</span>. When public transport is <span style="color:#2d6a4f;font-weight:700;">convenient</span> <span style="text-decoration:line-through;color:#c84b31;">fast and convenient</span>, people will <span style="text-decoration:line-through;color:#c84b31;">be happy to</span> leave their <span style="text-decoration:line-through;color:#c84b31;">private</span> vehicles at home.<br><br>
+    On the other hand, some shop owners worry that <span style="color:#2d6a4f;font-weight:700;">this ban</span> <span style="text-decoration:line-through;color:#c84b31;">banning cars</span> might <span style="color:#2d6a4f;font-weight:700;">threaten</span> <span style="text-decoration:line-through;color:#c84b31;">be a threat to</span> local businesses <span style="text-decoration:line-through;color:#c84b31;">They think that fewer customers will visit their shops</span>. However, pedestrian-only streets often attract more shoppers who enjoy walking safely <span style="text-decoration:line-through;color:#c84b31;">without traffic</span>.<br><br>
+    In conclusion, <span style="text-decoration:line-through;color:#c84b31;">to sum up everything I have said,</span> banning cars from city centres is <span style="color:#2d6a4f;font-weight:700;">beneficial</span> <span style="text-decoration:line-through;color:#c84b31;">a great idea</span> because it reduces pollution and <span style="color:#2d6a4f;font-weight:700;">improves</span> <span style="text-decoration:line-through;color:#c84b31;">encourages better</span> public transport.
+  </div>
+</section>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    function openTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function toggleEl(id) {
+      document.getElementById(id).classList.toggle('show');
+    }
+
+    // Manual word-by-word highlighting helper
+    function buildHighlightSheet(containerId, lines) {
+      const container = document.getElementById(containerId);
+      lines.forEach(line => {
+        const p = document.createElement('p');
+        p.style.margin = '4px 0';
+        const words = line.split(' ');
+        words.forEach((word, i) => {
+          const span = document.createElement('span');
+          span.className = 'word-btn';
+          span.textContent = word;
+          span.addEventListener('click', () => span.classList.toggle('highlighted'));
+          p.appendChild(span);
+          if (i < words.length - 1) p.appendChild(document.createTextNode(' '));
+        });
+        container.appendChild(p);
+      });
+    }
+
+    function clearHighlights(containerId) {
+      document.querySelectorAll(`#${containerId} .word-btn.highlighted`).forEach(el => el.classList.remove('highlighted'));
+    }
+
+    buildHighlightSheet('promptSheet', [
+      "Some people think teenagers should have a part-time job in their free time.",
+      "Do you agree?",
+      "Write about:",
+      "1. studying",
+      "2. getting experience",
+      "3. exploitation (your own idea)",
+      "Write your answer in 140–190 words in an appropriate style."
+    ]);
+
+    buildHighlightSheet('vagueSheet', [
+      "Nowadays, online communication is considered something without which it is impossible to live in modern society today. Also, people use it for many different things and reasons every single day."
+    ]);
+
+    // Drag & Drop Engine (Columns)
+    let draggedCard = null;
+    function createCard(text, ans, group) {
+      const div = document.createElement('div');
+      div.className = 'drag-card';
+      div.draggable = true;
+      div.textContent = text;
+      div.dataset.ans = ans;
+      div.dataset.group = group;
+      div.addEventListener('dragstart', () => { draggedCard = div; div.classList.add('dragging'); });
+      div.addEventListener('dragend', () => { div.classList.remove('dragging'); draggedCard = null; });
+      return div;
+    }
+
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('over');
+        if (draggedCard) {
+          draggedCard.classList.remove('correct', 'wrong');
+          zone.appendChild(draggedCard);
+        }
+      });
+    });
+
+    function resetZoneGroup(trayId, data, group) {
+      document.querySelectorAll(`.drag-card[data-group="${group}"]`).forEach(c => c.remove());
+      const tray = document.getElementById(trayId);
+      data.forEach(item => tray.appendChild(createCard(item.text, item.ans, group)));
+    }
+
+    function checkZoneGroup(group, msgId) {
+      const cards = document.querySelectorAll(`.drag-card[data-group="${group}"]`);
+      let correct = 0;
+      cards.forEach(card => {
+        const parentZone = card.parentElement.dataset.zone;
+        card.classList.remove('correct', 'wrong');
+        if (parentZone === card.dataset.ans) {
+          card.classList.add('correct');
+          correct++;
+        } else if (parentZone !== 'tray') {
+          card.classList.add('wrong');
+        }
+      });
+      const msg = document.getElementById(msgId);
+      msg.className = 'status-msg show';
+      msg.textContent = `${correct} of ${cards.length} cards placed correctly.`;
+    }
+
+    // Tab 1 Data
+    const sort2Data = [
+      { text: 'Studying', ans: 'Must include' },
+      { text: 'Getting experience', ans: 'Must include' },
+      { text: 'Exploitation (your own idea)', ans: 'Must include' },
+      { text: 'A clear opinion', ans: 'Must include' },
+      { text: '140–190 words', ans: 'Must include' },
+      { text: 'History of teenage work', ans: 'Optional' },
+      { text: 'A brief example of a typical part-time job', ans: 'Optional' },
+      { text: 'List of every possible job', ans: 'Irrelevant' },
+      { text: 'Adult unemployment', ans: 'Irrelevant' },
+      { text: 'How to write a CV', ans: 'Irrelevant' },
+      { text: 'Your favourite school subject', ans: 'Irrelevant' }
+    ];
+
+    const match4Data = [
+      { text: 'Teaches time management', ans: 'Studying' },
+      { text: 'Cooperate with colleagues', ans: 'Getting experience' },
+      { text: 'Employers pay low wages', ans: 'Exploitation' },
+      { text: 'Adults should also work', ans: 'Reject' },
+      { text: 'A job can replace school', ans: 'Reject' },
+      { text: 'Online chat is useful', ans: 'Reject' },
+      { text: 'University tuition is expensive', ans: 'Reject' },
+      { text: 'Public transport is often delayed', ans: 'Reject' },
+      { text: 'Teaches responsibility', ans: 'Getting experience' }
+    ];
+
+    resetZoneGroup('tray2', sort2Data, 'sort2');
+    resetZoneGroup('tray4', match4Data, 'match4');
+
+    // Vocab Deck
+    const vocabList = [
+      { word: 'Face', ex: 'Teenagers face pressure to balance school and work.' },
+      { word: 'Lack of', ex: 'A lack of time can affect homework.' },
+      { word: 'Get stuck', ex: 'Students may get stuck if they fall behind.' },
+      { word: 'Go through', ex: 'Many students go through stress before exams.' },
+      { word: 'Gather', ex: 'Work helps teenagers gather practical experience.' },
+      { word: 'Lead to', ex: 'A lack of sleep can lead to poor concentration.' },
+      { word: 'Sum up', ex: 'To sum up, part-time jobs can be beneficial.' },
+      { word: 'Threat', ex: 'Exploitation is a threat to young workers.' },
+      { word: 'On behalf of', ex: 'I am writing on behalf of my class.' },
+      { word: 'Come across', ex: 'I came across an article about teen jobs.' }
+    ];
+    const deck = document.getElementById('vocabDeck');
+    vocabList.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'vocab-card';
+      card.innerHTML = `<div class="vocab-term">${v.word}</div><div class="vocab-ex">${v.ex}</div>`;
+      card.addEventListener('click', () => card.classList.toggle('picked'));
+      deck.appendChild(card);
+    });
+
+    // Tab 2 Ex 1: Spot & Fix 8 Deliberate Errors
+    const grammarErrors = [
+      { sent: 'Is obviously that studying is their main priority.', fix: 'It is obvious', hint: 'Missing dummy subject "It" + adjective "obvious".' },
+      { sent: 'It allows to develop a sense of organisation.', fix: 'allows teenagers to develop', hint: '"allow" needs an object (e.g. teenagers) before "to + verb".' },
+      { sent: 'Doesn’t matter what job a teenager choose.', fix: 'It does not matter', hint: 'Needs "It" at the start; also "a teenager chooses".' },
+      { sent: 'They enter in the world of job early.', fix: 'enter the world of work', hint: '"enter" takes no preposition; use "work" (uncountable).' },
+      { sent: 'Nobody can imagine a day without speak.', fix: 'without speaking', hint: 'Use a gerund (-ing) after a preposition ("without").' },
+      { sent: 'They pay small amount of money to teenager.', fix: 'a small amount', hint: 'Singular countable nouns need an article ("a").' },
+      { sent: 'Work under pressure are valuable skills.', fix: 'Working under pressure is', hint: 'Gerund subject "Working" takes singular verb "is".' },
+      { sent: 'Facing with a part-time job teach them discipline.', fix: 'teaches', hint: 'Singular subject ("Having a part-time job") takes "teaches".' }
+    ];
+
+    const gList = document.getElementById('grammarFixList');
+    grammarErrors.forEach((item, i) => {
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      const sentDiv = document.createElement('div');
+      sentDiv.className = 'err-sentence';
+      sentDiv.innerHTML = `<strong>${i + 1}.</strong> `;
+      item.sent.split(' ').forEach((w, wi) => {
+        const sp = document.createElement('span');
+        sp.className = 'word-btn';
+        sp.textContent = w;
+        sp.addEventListener('click', () => sp.classList.toggle('highlighted'));
+        sentDiv.appendChild(sp);
+        if (wi < item.sent.split(' ').length - 1) sentDiv.appendChild(document.createTextNode(' '));
+      });
+
+      const fixRow = document.createElement('div');
+      fixRow.className = 'err-fix-row';
+      fixRow.innerHTML = `
+        <input type="text" id="gfix_${i}" placeholder="Type the corrected part..." />
+        <button class="action ghost" onclick="toggleEl('ghint_${i}')">Check / Hint</button>
+      `;
+
+      const hintBox = document.createElement('div');
+      hintBox.id = `ghint_${i}`;
+      hintBox.className = 'status-msg';
+      hintBox.innerHTML = `<strong>Suggested fix:</strong> <em>${item.fix}</em> — ${item.hint}`;
+
+      row.appendChild(sentDiv);
+      row.appendChild(fixRow);
+      row.appendChild(hintBox);
+      gList.appendChild(row);
+    });
+
+    // Tab 2 Ex 2: Clickable Choice Boxes
+    const qcData = [
+      { q: '1. A part-time job allows teenagers ___ practical skills.', opts: ['develop', 'to develop', 'developing'], ans: 'to develop' },
+      { q: '2. Without ___ regularly, relationships can weaken.', opts: ['speak', 'to speak', 'speaking'], ans: 'speaking' },
+      { q: '3. Studying should remain ___ main priority.', opts: ['a', 'the', 'an'], ans: 'the' },
+      { q: '4. Every teenager ___ different challenges.', opts: ['face', 'faces', 'facing'], ans: 'faces' },
+      { q: '5. A lack ___ experience can be a disadvantage.', opts: ['of', 'for', 'in'], ans: 'of' },
+      { q: '6. They learn to cooperate ___ colleagues.', opts: ['to', 'with', 'for'], ans: 'with' },
+      { q: '7. ___ under pressure is a useful skill.', opts: ['Work', 'Working', 'Worked'], ans: 'Working' },
+      { q: '8. Employers should pay ___ fair wage.', opts: ['a', 'an', 'the'], ans: 'a' },
+      { q: '9. Teenagers may ___ stuck if they have too much work.', opts: ['get', 'make', 'do'], ans: 'get' },
+      { q: '10. Poor sleep can lead ___ lower grades.', opts: ['in', 'at', 'to'], ans: 'to' }
+    ];
+
+    const qcList = document.getElementById('quickChoiceList');
+    qcData.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'item-row';
+      div.innerHTML = `<div>${item.q}</div>`;
+      const boxes = document.createElement('div');
+      boxes.className = 'choice-boxes';
+      boxes.dataset.idx = i;
+      item.opts.forEach(o => {
+        const b = document.createElement('div');
+        b.className = 'choice-box';
+        b.textContent = o;
+        b.addEventListener('click', () => {
+          boxes.querySelectorAll('.choice-box').forEach(x => x.classList.remove('selected', 'correct', 'wrong'));
+          b.classList.add('selected');
+        });
+        boxes.appendChild(b);
+      });
+      div.appendChild(boxes);
+      qcList.appendChild(div);
+    });
+
+    function checkQuickChoice() {
+      let score = 0;
+      qcData.forEach((item, i) => {
+        const boxes = document.querySelector(`.choice-boxes[data-idx="${i}"]`);
+        const sel = boxes.querySelector('.choice-box.selected');
+        if (sel) {
+          if (sel.textContent === item.ans) { sel.classList.add('correct'); score++; }
+          else { sel.classList.add('wrong'); }
+        }
+      });
+      const msg = document.getElementById('qcMsg');
+      msg.className = 'status-msg show';
+      msg.textContent = `You scored ${score} out of ${qcData.length}.`;
+    }
+
+    // Tab 3 Data
+    const paraOrderData = [
+      { text: 'For example, working in a shop teaches young people how to deal with customers.', ans: '3. Example' },
+      { text: 'Therefore, part-time work is a valuable way to prepare for adult life.', ans: '4. Link' },
+      { text: 'Firstly, a part-time job helps teenagers gain practical experience.', ans: '1. Topic' },
+      { text: 'They learn how to manage their time and follow a schedule.', ans: '2. Explanation' }
+    ];
+    resetZoneGroup('trayP1', paraOrderData, 'paraOrder');
+
+    const suppData = [
+      { text: 'Students must still complete homework before going to work.', ans: 'Time Management' },
+      { text: 'Some employers pay low wages for long hours.', ans: 'Exploitation' },
+      { text: 'Body language and eye contact build deeper trust.', ans: 'Face-to-Face' },
+      { text: 'Young workers should have fair contracts.', ans: 'Exploitation' },
+      { text: 'Facial expressions help people understand emotions.', ans: 'Face-to-Face' },
+      { text: 'Planning a weekly schedule prevents falling behind.', ans: 'Time Management' }
+    ];
+    resetZoneGroup('traySupp', suppData, 'suppMatch');
+
+    function checkTopicSentences() {
+      const a = document.querySelector('input[name="tsA"]:checked')?.value === '1';
+      const b = document.querySelector('input[name="tsB"]:checked')?.value === '1';
+      const msg = document.getElementById('tsMsg');
+      msg.className = 'status-msg show';
+      msg.textContent = `${(a ? 1 : 0) + (b ? 1 : 0)} of 2 topic sentences identified correctly.`;
+    }
+
+    function checkBestTS() {
+      const ok = document.querySelector('input[name="bestTS"]:checked')?.value === '1';
+      const msg = document.getElementById('bestTSMsg');
+      msg.className = 'status-msg show';
+      msg.textContent = ok ? 'Correct! It introduces the exploitation argument clearly.' : 'Try again—look for the sentence that introduces exploitation.';
+    }
+
+    // Tab 4 Ex 1: Vertical Sortable Stack
+    const stackItemsData = [
+      { order: 3, text: 'In addition, online communication helps people who live far from relatives stay close.' },
+      { order: 1, text: 'Nowadays, online communication is essential, yet I disagree that it is as good as meeting in person.' },
+      { order: 5, text: 'In conclusion, although online tools are convenient, face-to-face contact remains the best way to communicate.' },
+      { order: 2, text: 'Firstly, people communicate to maintain relationships, and video calls make this fast and convenient.' },
+      { order: 4, text: 'Nevertheless, being in the same room builds deeper trust through body language and eye contact.' }
+    ];
+
+    const stackEl = document.getElementById('essayStack');
+    let draggedStack = null;
+
+    stackItemsData.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'stack-item';
+      div.draggable = true;
+      div.dataset.order = item.order;
+      div.innerHTML = `<span class="stack-handle">::</span><span>${item.text}</span>`;
+      div.addEventListener('dragstart', () => { draggedStack = div; div.classList.add('dragging'); });
+      div.addEventListener('dragend', () => { div.classList.remove('dragging'); draggedStack = null; });
+      div.addEventListener('dragover', e => {
+        e.preventDefault();
+        if (draggedStack && draggedStack !== div) {
+          const rect = div.getBoundingClientRect();
+          const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+          stackEl.insertBefore(draggedStack, next ? div.nextSibling : div);
+        }
+      });
+      stackEl.appendChild(div);
+    });
+
+    function checkStackOrder() {
+      const items = Array.from(stackEl.children);
+      let correct = 0;
+      items.forEach((el, idx) => {
+        el.classList.remove('correct', 'wrong');
+        if (Number(el.dataset.order) === idx + 1) {
+          el.classList.add('correct');
+          correct++;
+        } else {
+          el.classList.add('wrong');
+        }
+      });
+      const msg = document.getElementById('msgEssay');
+      msg.className = 'status-msg show';
+      msg.textContent = `${correct} of ${items.length} cards in the right position.`;
+    }
+
+    // Tab 4 Ex 2: Inline Noun Replacement
+    function checkInlineReps() {
+      const sels = document.querySelectorAll('#repExercise .inline-select');
+      let correct = 0;
+      sels.forEach(s => {
+        if (s.value === s.dataset.ans) {
+          correct++;
+          s.style.borderColor = '#2d6a4f';
+          s.style.background = '#ecfdf5';
+        } else {
+          s.style.borderColor = '#c84b31';
+          s.style.background = '#fef2f2';
+        }
+      });
+      const msg = document.getElementById('repMsg');
+      msg.className = 'status-msg show';
+      msg.textContent = `${correct} of ${sels.length} replacements correct.`;
+    }
+
+    // Tab 4 Ex 4: Choose the Best Shorter Version (4 items)
+    const shortData = [
+      {
+        wordy: '1. "In my personal opinion, I really think that it is a very good idea for young people to have a job."',
+        opts: [
+          { t: 'In my opinion, having a part-time job is beneficial for young people.', ok: true },
+          { t: 'Personally, I think that maybe a job is something good for youth.', ok: false }
+        ]
+      },
+      {
+        wordy: '2. "Due to the fact that students have a lot of homework to do, they need time."',
+        opts: [
+          { t: 'Because students have a lot of homework, they need enough time.', ok: true },
+          { t: 'For the reason of having many homeworks, students are needing time.', ok: false }
+        ]
+      },
+      {
+        wordy: '3. "Online platforms give us the ability to be able to talk to people who live in other countries."',
+        opts: [
+          { t: 'Online platforms allow us to communicate with people abroad.', ok: true },
+          { t: 'Online platforms make us have the ability to talk with far people.', ok: false }
+        ]
+      },
+      {
+        wordy: '4. "To sum up everything that I have said in this essay, meeting in person is still better."',
+        opts: [
+          { t: 'In conclusion, meeting in person remains the better option.', ok: true },
+          { t: 'To sum up all the things mentioned above in my writing, meeting is better.', ok: false }
+        ]
+      }
+    ];
+
+    const shortList = document.getElementById('shortList');
+    shortData.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'item-row';
+      div.innerHTML = `<div><strong>Wordy:</strong> <em>${item.wordy}</em></div>`;
+      const rg = document.createElement('div');
+      rg.className = 'radio-group';
+      item.opts.forEach(o => {
+        rg.innerHTML += `<label class="radio-opt"><input type="radio" name="sh_${i}" value="${o.ok ? 1 : 0}"> ${o.t}</label>`;
+      });
+      div.appendChild(rg);
+      shortList.appendChild(div);
+    });
+
+    function checkShortAll() {
+      let score = 0;
+      shortData.forEach((_, i) => {
+        if (document.querySelector(`input[name="sh_${i}"]:checked`)?.value === '1') score++;
+      });
+      const msg = document.getElementById('shortMsg');
+      msg.className = 'status-msg show';
+      msg.textContent = `You chose ${score} out of ${shortData.length} concise versions.`;
+    }
+
+    // Tab 4 Ex 5: Live Word Counter
+    function updateWordCount() {
+      const text = document.getElementById('trimBox').value.trim();
+      const count = text ? text.split(/\s+/).length : 0;
+      const el = document.getElementById('wcDisplay');
+      el.textContent = `Word count: ${count} words ${count >= 170 && count <= 185 ? '(Target reached!)' : '(Target: 170–185)'}`;
+      el.style.color = (count >= 170 && count <= 185) ? '#2d6a4f' : '#c84b31';
+    }
+    updateWordCount();
+  </script>
+</body>
+</html>
