@@ -471,7 +471,8 @@ html{font-size:20px}html.ll-guide{--paper:var(--ll-card)}html.ll-essay{--paper:v
         Guides <span class="arrow">▶</span>
       </button>
       <div class="guide-links open">
-        <a class="guide-link" href="index.html">Key Word Transformations</a>
+        <a class="guide-link" href="index.html">Home</a>
+        <a class="guide-link" href="key-word-transformations.html">Key Word Transformations</a>
         <a class="guide-link" href="tense-building-blocks.html">English Tense Building Blocks</a>
         <a class="guide-link" href="english-articles.html">English Articles</a>
         <a class="guide-link active" href="active-passive-voice.html" aria-current="page">Active and Passive Voice</a>
@@ -851,7 +852,7 @@ html{font-size:20px}html.ll-guide{--paper:var(--ll-card)}html.ll-essay{--paper:v
   const original=essay?window.openTab:window.showChapter;
   const host=document.querySelector(essay?'.wrap':'#main');
   if(!records.length||!host||typeof original!=='function')return;
-  const guidePaths=[['index.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],['B2Reported_Speech_and_Report.html','Reported Speech & Report Writing']];
+  const guidePaths=[['index.html','Home'],['key-word-transformations.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],['B2Reported_Speech_and_Report.html','Reported Speech & Report Writing']];
   let current=0,font=20,clearSelection=()=>{};
   try{let n=Number(localStorage.getItem('language-lab-text-size'));if(n>=16&&n<=34)font=n}catch(e){}
   function applyFont(n){font=Math.max(16,Math.min(34,n));root.style.fontSize=font+'px';try{localStorage.setItem('language-lab-text-size',String(font))}catch(e){}}
@@ -908,7 +909,7 @@ html{font-size:20px}html.ll-guide{--paper:var(--ll-card)}html.ll-essay{--paper:v
  const position=isReport?document.getElementById('position'):document.querySelector('.ll-position');
  const bar=isReport?document.querySelector('body>header nav'):document.querySelector('.ll-controls');
  if(!jump||!position||!bar||!jump.options.length)return;
- const guides=[['index.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],["B2Reported_Speech_and_Report.html",'Reported Speech & Report Writing']];
+ const guides=[['index.html','Home'],['key-word-transformations.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],["B2Reported_Speech_and_Report.html",'Reported Speech & Report Writing']];
  const title=guides.find(([p])=>p==="active-passive-voice.html")?.[1]||document.title;
  const make=(tag,cls,label)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(label!==undefined)e.textContent=label;return e};
  const menu=make('aside');menu.id='ll-contents';menu.hidden=true;menu.setAttribute('aria-label','Guide and section contents');
