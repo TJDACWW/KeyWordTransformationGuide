@@ -162,7 +162,7 @@ document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.isComposing||e.
  const position=isReport?document.getElementById('position'):document.querySelector('.ll-position');
  const bar=isReport?document.querySelector('body>header nav'):document.querySelector('.ll-controls');
  if(!jump||!position||!bar||!jump.options.length)return;
- const guides=[['index.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],["B2Reported_Speech_and_Report.html",'Reported Speech & Report Writing']];
+ const guides=[['index.html','Home'],['key-word-transformations.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],["B2Reported_Speech_and_Report.html",'Reported Speech & Report Writing']];
  const title=guides.find(([p])=>p==="B2Reported_Speech_and_Report.html")?.[1]||document.title;
  const make=(tag,cls,label)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(label!==undefined)e.textContent=label;return e};
  const menu=make('aside');menu.id='ll-contents';menu.hidden=true;menu.setAttribute('aria-label','Guide and section contents');
