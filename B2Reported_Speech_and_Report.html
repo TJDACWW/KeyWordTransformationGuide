@@ -20,6 +20,42 @@ h1,.kw-line,.kw-summary{overflow-wrap:anywhere}.layout>*{min-width:0}
 .model-row{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);border-bottom:1px solid var(--line);align-items:start;gap:clamp(10px,2vw,24px);padding:.85em .85em;}
 .model-passage,.model-annotation{min-width:0;overflow-wrap:break-word}.model-passage h3{margin:0 0 .35em;color:var(--blue);font-family:Georgia,serif;font-size:1.1em}.model-passage p{margin:0;line-height:1.55}.model-annotation{border-left:2px solid #a33f27;padding-left:.65em;color:#513528;font-size:.84em;line-height:1.45}.model-note{display:flex;align-items:baseline;gap:.4em;margin:0 0 .5em!important}.model-note>span:last-child{min-width:0;overflow-wrap:anywhere}.model-note:last-child{margin-bottom:0!important}.note-number{font-size:.76em;color:#a33f27;font-weight:750;flex:none}.model-task{margin-bottom:.5em}.shortcut-note{display:block;text-align:center;color:#59636a;font:12px/1.4 system-ui,sans-serif;padding:0 12px 10px}.book-practice{border-top:2px solid var(--blue);margin-top:clamp(20px,4vw,40px);padding-top:12px}.book-practice summary{cursor:pointer;color:var(--blue);font-weight:650}.book-practice[open] summary{margin-bottom:.8em}.book-practice .book-task{max-width:850px}.book-practice .book-controls{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.book-practice .book-controls button{font-size:14px;min-height:38px}.book-practice .book-text{font-family:Georgia,serif;font-size:1.13em;line-height:1.4}.book-practice textarea{min-height:3.5em}.book-practice .book-feedback{border-left:3px solid var(--accent);padding:.5em .65em;background:#e9e3d8;margin:.6em 0}.book-practice .book-feedback:empty{display:none}.book-practice .choices button{font-size:inherit}.book-practice .book-state{font-size:.8em;color:#59636a}.book-practice .book-controls .action{color:#fff;background:var(--blue)}
 @media(max-width:680px){.model-row{grid-template-columns:1fr;gap:.6em;padding:.75em .65em}.model-annotation{border-left:2px solid #a33f27;padding:.35em .65em;background:#f5f1e8;font-size:.87em}.shortcut-note{font-size:11px}} 
+</style>
+<style>
+
+/* Language Lab contents sidebar. Desktop dock; mobile drawer. */
+:root{--ll-side-width:264px;--ll-side-bg:#172d38;--ll-side-text:#f5f1e8;--ll-side-muted:#b7c8ce;--ll-side-line:#405762;--ll-side-active:#174b60}
+html.ll-sidebar-ready body{box-sizing:border-box;min-width:0;padding-left:0;transition:none}
+html.ll-sidebar-ready #ll-contents[hidden],html.ll-sidebar-ready #ll-shade[hidden]{display:none!important}
+html.ll-sidebar-ready .ll-header select.ll-select,html.ll-sidebar-ready #jump{display:none!important}
+html.ll-sidebar-ready #ll-contents{position:fixed;inset:0 auto 0 0;width:var(--ll-side-width);max-width:calc(100vw - 44px);height:100vh;height:100dvh;z-index:300;background:var(--ll-side-bg);color:var(--ll-side-text);display:flex;flex-direction:column;overflow:hidden;font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;box-sizing:border-box;text-align:left;box-shadow:none}
+#ll-contents *{box-sizing:border-box;min-width:0;overflow-wrap:anywhere}
+#ll-contents .ll-menu-head{padding:13px 12px;border-bottom:1px solid var(--ll-side-line);display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none}
+#ll-contents .ll-menu-brand{font:750 11px/1.35 system-ui,sans-serif;letter-spacing:.1em;color:#fff}
+#ll-contents .ll-menu-title{font:600 16px/1.25 Georgia,serif;color:#f5f1e8;margin:3px 0 0}
+#ll-contents .ll-menu-close{background:transparent;color:white;border:1px solid #8299a2;border-radius:3px;padding:5px 8px;min-height:36px;min-width:38px;font:14px/1.3 system-ui,sans-serif;flex:none;cursor:pointer}
+#ll-contents .ll-menu-scroll{overflow:auto;overscroll-behavior:contain;flex:1;min-height:0;padding:9px 0 18px;scrollbar-width:thin;scrollbar-color:#657e88 var(--ll-side-bg)}
+#ll-contents .ll-menu-label{color:var(--ll-side-muted);font:700 10px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:11px 12px 5px}
+#ll-contents .ll-menu-guides{padding-bottom:10px;margin-bottom:8px;border-bottom:1px solid var(--ll-side-line)}
+#ll-contents .ll-menu-link,#ll-contents .ll-menu-item{display:block;width:100%;color:var(--ll-side-text);background:transparent;border:0;border-left:3px solid transparent;border-radius:0;box-shadow:none;text-decoration:none;text-align:left;font:14px/1.4 system-ui,sans-serif;padding:9px 11px 9px 14px;min-height:40px;margin:0;cursor:pointer;transform:none}
+#ll-contents .ll-menu-link[aria-current=page],#ll-contents .ll-menu-item[aria-current=step]{background:var(--ll-side-active);border-left-color:#edb28b;color:#fff;font-weight:650}
+#ll-contents .ll-menu-link:hover,#ll-contents .ll-menu-item:hover,#ll-contents summary:hover{background:#284754;color:#fff;box-shadow:none;transform:none}
+#ll-contents details{border:0;margin:0;padding:0}
+#ll-contents details>summary{cursor:pointer;color:#e2ecef;padding:9px 12px;min-height:40px;font:650 12px/1.45 system-ui,sans-serif;letter-spacing:.035em;border-top:1px solid #314953;list-style-position:inside}
+#ll-contents details>summary::marker{color:#edb28b}
+#ll-contents .ll-menu-number{color:#b9cbd1;font:12px/1.35 system-ui,sans-serif;display:inline-block;min-width:25px;margin-right:4px;font-variant-numeric:tabular-nums}
+#ll-contents .ll-menu-item[aria-current=step] .ll-menu-number{color:#f4c3a7}
+#ll-contents :focus-visible,#ll-contents summary:focus-visible,#ll-menu-toggle:focus-visible{outline:2px solid #f0b077;outline-offset:-3px}
+#ll-contents .ll-menu-count{padding:10px 12px;border-top:1px solid var(--ll-side-line);font:12px/1.35 system-ui,sans-serif;color:var(--ll-side-muted);flex:none;font-variant-numeric:tabular-nums}
+#ll-shade{position:fixed;inset:0;z-index:299;background:#172d387d;border:0;padding:0;margin:0;cursor:pointer}
+#ll-menu-toggle{background:#172d38;color:#fff;border:1px solid #a9b8bf;border-radius:3px;font:650 14px/1.3 system-ui,sans-serif;padding:5px 9px;min-height:36px;max-width:100%;cursor:pointer}
+#ll-menu-toggle:hover{background:#284754;border-color:#f4c3a7}
+html.ll-sidebar-ready .ll-header-inner,html.ll-sidebar-ready body>header:not(.ll-header){min-width:0}
+@media(min-width:901px){html.ll-sidebar-ready.ll-menu-open body{padding-left:var(--ll-side-width)}html.ll-sidebar-ready #ll-shade{display:none!important}}
+@media(min-width:901px) and (max-width:1100px){html.ll-menu-open .layout,html.ll-menu-open .pair-grid{grid-template-columns:1fr}html.ll-menu-open #screen,html.ll-menu-open #main,html.ll-menu-open .wrap{padding:24px 18px}html.ll-menu-open .chapter-header h2,html.ll-menu-open .ll-screen-heading{font-size:1.8rem}}
+@media(max-width:900px){html.ll-sidebar-ready body{padding-left:0}html.ll-sidebar-ready #ll-contents{box-shadow:5px 0 18px #172d3850}html.ll-sidebar-ready.ll-menu-open body{overflow:hidden}}
+@media print{html.ll-sidebar-ready body{padding-left:0!important;overflow:visible!important}#ll-contents,#ll-shade,#ll-menu-toggle{display:none!important}}
+
 </style><header><strong>LANGUAGE LAB / B2</strong><nav><button id="sm" aria-label="Decrease text size">A−</button><button id="lg" aria-label="Increase text size">A+</button><select id="jump" aria-label="Choose activity"></select><button id="referenceOpen" aria-haspopup="dialog">Reference</button><button id="reset">Reset</button></nav></header><div class="progress"><div id="bar"></div></div><main id="screen"><div class="stage">INTERACTIVE PRESENTATION</div><h1>Reported speech — Language Lab</h1><p>If this message remains visible, the preview is not running JavaScript. Save the HTML file and open it directly in Safari, Chrome or Firefox.</p></main><div class="foot"><button id="prev" aria-keyshortcuts="ArrowLeft" title="Previous activity (Left arrow)">← Back</button><span id="position" class="count"></span><button id="next" class="action" aria-keyshortcuts="ArrowRight" title="Next activity (Right arrow)">Next →</button></div><div class="shortcut-note">Keyboard: ← previous activity · → next activity (when not typing)</div><dialog id="referenceDialog" aria-labelledby="refTitle"><div class="ref-toolbar"><strong id="refTitle">Language reference</strong><div class="ref-controls"><button id="refSm" aria-label="Decrease text size">A−</button><button id="refLg" aria-label="Increase text size">A+</button><button id="refClose">Close</button></div><label for="refTopic" class="ref-topic-label">Topic</label><select id="refTopic"></select></div><div id="refBody" class="ref-body" tabindex="0"></div></dialog><script>
 const $=id=>document.getElementById(id);let page=0,fs=20;const state={};const titles=['The message changes','Watch the transformation','Backshift laboratory','Modal decisions','A different time and place','Build the question','Editor’s desk','The missing reservation','Interview and report','Exit challenge'];const screen=$('screen');const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function btn(t,fn,cl=''){let b=document.createElement('button');b.textContent=t;b.className=cl;b.onclick=fn;return b}function shell(k,title,instr,body){screen.innerHTML=`<div class="stage">${String(page+1).padStart(2,'0')} / ${k}</div><h1>${title}</h1><p class="intro">${instr}</p>${body}`;}
 function show(){ $('jump').value=page;$('position').textContent=`${page+1} / ${titles.length}`;$('bar').style.width=(page+1)/titles.length*100+'%';$('prev').disabled=page===0;$('next').disabled=page===titles.length-1;views[page]();window.scrollTo(0,0)}function go(n){page=Math.max(0,Math.min(titles.length-1,n));show()}
@@ -115,4 +151,76 @@ const bookExercises={"15": {"title": "Restaurant task · textbook practice (opti
 function appendBookPractice(p){const conf=bookExercises[p];if(!conf)return;const st=state['book'+p]??={open:false,i:0,values:{},checked:{}};const outer=document.createElement('details');outer.className='book-practice';outer.open=st.open;outer.ontoggle=()=>{st.open=outer.open};outer.innerHTML='<summary>'+esc(conf.title)+'</summary><div class="book-task"></div>';screen.append(outer);const box=outer.querySelector('.book-task');function draw(){let i=st.i,q=conf.items[i];box.innerHTML=(conf.task?'<div class="ref-sample">'+esc(conf.task)+'</div>':'')+'<p class="book-state">Original textbook practice · '+(i+1)+' / '+conf.items.length+'</p><h2>'+esc(q.prompt)+'</h2>'+(q.text?'<p class="book-text">'+esc(q.text)+'</p>':'')+(q.gap?'<p>'+esc(q.gap)+'</p>':'');const controls=document.createElement('div');controls.className='choices';box.append(controls);const fb=document.createElement('div');fb.className='book-feedback';fb.setAttribute('aria-live','polite');function feedback(){fb.replaceChildren();if(!st.checked[i])return;if(q.options){let good=st.values[i]===q.correct;let b=document.createElement('strong');b.textContent=good?'Good choice. ':'Suggested choice: '+q.options[q.correct]+'. ';fb.append(b,document.createTextNode(q.why));Array.from(controls.children).forEach((el,j)=>{el.classList.toggle('good',j===q.correct);el.classList.toggle('bad',j===st.values[i]&&j!==q.correct);el.setAttribute('aria-pressed',String(j===st.values[i]))});}else{let value=st.values[i]||'';let norm=x=>x.toLowerCase().trim().replace(/\s+/g,' ');let match=q.answers.some(x=>norm(x)===norm(value));let b=document.createElement('strong');b.textContent=match?'Matches the model. ':'Suggested answer: ';fb.append(b,document.createTextNode((match?'':q.answers[0]+'. ')+q.why));}}if(q.options){q.options.forEach((op,j)=>{let b=btn(op,()=>{st.values[i]=j;st.checked[i]=true;feedback()});b.setAttribute('aria-pressed',String(st.values[i]===j));controls.append(b)});}else{const input=document.createElement(p===21?'textarea':'input');if(p!==21)input.type='text';input.className='kw-input';input.setAttribute('aria-label','Your answer');input.value=st.values[i]||'';input.oninput=()=>{st.values[i]=input.value;delete st.checked[i];feedback()};controls.append(input,btn('Compare with model',()=>{st.checked[i]=true;feedback()},'action'));}box.append(fb);const nav=document.createElement('div');nav.className='book-controls';let prev=btn('Previous item',()=>{st.i--;draw()});prev.disabled=i===0;let next=btn('Next item',()=>{st.i++;draw()},'action');next.disabled=i===conf.items.length-1;nav.append(prev,next,btn('Clear this item',()=>{delete st.values[i];delete st.checked[i];draw()}));box.append(nav);feedback();}draw();}
 [15,18,21].forEach(p=>{const original=views[p];views[p]=()=>{original();appendBookPractice(p)}});
 document.addEventListener('keydown',e=>{if(e.defaultPrevented||e.isComposing||e.repeat||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||referenceDialog.open)return;const target=e.target;if(target instanceof Element && target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], [role="slider"], [role="combobox"]'))return;if(e.key==='ArrowLeft'&&page>0){e.preventDefault();go(page-1)}else if(e.key==='ArrowRight'&&page<titles.length-1){e.preventDefault();go(page+1)}});
-</script></html>
+</script><script>
+
+/* Unified side panel. Retains the existing navigation and exercise state. */
+(function(){
+ "use strict";
+ const root=document.documentElement;
+ const isReport="B2Reported_Speech_and_Report.html"==="B2Reported_Speech_and_Report.html";
+ const jump=isReport?document.getElementById('jump'):document.querySelector('.ll-header select[aria-label="Choose section"]');
+ const position=isReport?document.getElementById('position'):document.querySelector('.ll-position');
+ const bar=isReport?document.querySelector('body>header nav'):document.querySelector('.ll-controls');
+ if(!jump||!position||!bar||!jump.options.length)return;
+ const guides=[['index.html','Key Word Transformations'],['tense-building-blocks.html','Tense Building Blocks'],['english-articles.html','English Articles'],['active-passive-voice.html','Active and Passive Voice'],['essay.html','Essay Writing'],["B2Reported_Speech_and_Report.html",'Reported Speech & Report Writing']];
+ const title=guides.find(([p])=>p==="B2Reported_Speech_and_Report.html")?.[1]||document.title;
+ const make=(tag,cls,label)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(label!==undefined)e.textContent=label;return e};
+ const menu=make('aside');menu.id='ll-contents';menu.hidden=true;menu.setAttribute('aria-label','Guide and section contents');
+ const head=make('div','ll-menu-head'),name=make('div');name.append(make('div','ll-menu-brand','LANGUAGE LAB / B2'),make('div','ll-menu-title',title));
+ const close=make('button','ll-menu-close','×');close.type='button';close.setAttribute('aria-label','Close contents');close.title='Close contents';head.append(name,close);menu.append(head);
+ const scroll=make('div','ll-menu-scroll'),guideNav=make('nav','ll-menu-guides');guideNav.setAttribute('aria-label','Guides');guideNav.append(make('div','ll-menu-label','Guides'));
+ guides.forEach(([path,label])=>{const a=make('a','ll-menu-link',label);a.href=path;if(path==="B2Reported_Speech_and_Report.html")a.setAttribute('aria-current','page');guideNav.append(a)});
+ const sections=make('nav');sections.setAttribute('aria-label','Sections in this guide');sections.append(make('div','ll-menu-label','Contents'));scroll.append(guideNav,sections);menu.append(scroll);
+ const count=make('div','ll-menu-count');menu.append(count);
+ const groups=new Map(),items=[];
+ const opts=Array.from(jump.options);
+ const oldChapterLinks=Array.from(document.querySelectorAll('#sidebar .chapter-link'));
+ function groupName(opt,i){
+   if(isReport)return i<10?'Reported speech':i<15?'Active/passive & Part 4':'Report writing';
+   if(opt.parentElement?.tagName==='OPTGROUP')return opt.parentElement.label;
+   const old=oldChapterLinks[i];const part=old?.closest('.part-group');
+   const label=part?.querySelector('.part-toggle')?.textContent.replace(/▶|▼|▾|▸/g,'').trim();
+   return label&&label!=='Chapter List'?label:'Chapters';
+ }
+ function tidy(opt,i){let t=opt.textContent.trim();return t.replace(/^\d+\.\s*/,'').replace(/^Overview:\s*/,'')}
+ opts.forEach((opt,i)=>{
+   const group=groupName(opt,i);let d=groups.get(group);
+   if(!d){d=make('details');d.append(make('summary','',group));sections.append(d);groups.set(group,d)}
+   const b=make('button','ll-menu-item');b.type='button';b.append(make('span','ll-menu-number',String(i+1).padStart(2,'0')),document.createTextNode(tidy(opt,i)));
+   b.addEventListener('click',()=>{jump.value=opt.value;jump.dispatchEvent(new Event('change',{bubbles:true}));if(!wide.matches)setOpen(false,true);else sync()});
+   d.append(b);items.push({b,d,value:opt.value});
+ });
+ const shade=make('div');shade.id='ll-shade';shade.hidden=true;shade.setAttribute('aria-hidden','true');document.body.append(shade,menu);
+ const toggle=make('button','','Contents');toggle.id='ll-menu-toggle';toggle.type='button';toggle.setAttribute('aria-controls',menu.id);toggle.setAttribute('aria-expanded','false');toggle.title='Show or hide contents';bar.prepend(toggle);
+ // Old list controls remain available to the lesson engines but not to the visual or keyboard UI.
+ jump.hidden=true;jump.tabIndex=-1;jump.setAttribute('aria-hidden','true');
+ const oldGuide=document.querySelector('.ll-header select[aria-label="Choose guide"]');if(oldGuide){oldGuide.hidden=true;oldGuide.tabIndex=-1;oldGuide.setAttribute('aria-hidden','true')}
+ const wide=matchMedia('(min-width:901px)');
+ let opened=false,lastValue=null;
+ function sync(){
+   const val=jump.value;const changed=lastValue!==val;lastValue=val;
+   items.forEach(({b,d,value})=>{if(value===val){b.setAttribute('aria-current','step');if(changed)d.open=true}else b.removeAttribute('aria-current')});
+   count.textContent='Section '+position.textContent.trim();
+   if(changed&&opened){const active=items.find(x=>x.value===val)?.b;if(active){const r=active.getBoundingClientRect(),v=scroll.getBoundingClientRect();if(r.bottom>v.bottom)scroll.scrollTop+=r.bottom-v.bottom+10;else if(r.top<v.top)scroll.scrollTop-=v.top-r.top+10}}
+ }
+ function setOpen(open,returnFocus=false){
+   opened=open;root.classList.toggle('ll-menu-open',open);menu.hidden=!open;shade.hidden=!open||wide.matches;toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'Hide contents':'Contents';
+   if(open&&!wide.matches){menu.setAttribute('role','dialog');menu.setAttribute('aria-modal','true');close.focus({preventScroll:true})}else{menu.removeAttribute('role');menu.removeAttribute('aria-modal')}
+   if(!open&&returnFocus)toggle.focus({preventScroll:true});if(open)sync();
+ }
+ toggle.addEventListener('click',()=>setOpen(!opened));close.addEventListener('click',()=>setOpen(false,true));shade.addEventListener('click',()=>setOpen(false,true));
+ document.addEventListener('keydown',e=>{
+   if(!opened||document.querySelector('dialog[open]'))return;
+   if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();setOpen(false,true);return}
+   if(!wide.matches){
+     if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.stopImmediatePropagation();return}
+     if(e.key==='Tab'){const focusables=Array.from(menu.querySelectorAll('button,a[href],summary')).filter(el=>el.getClientRects().length&&!el.disabled);if(!focusables.length)return;const first=focusables[0],last=focusables[focusables.length-1];if(e.shiftKey&&(document.activeElement===first||!menu.contains(document.activeElement))){e.preventDefault();last.focus()}else if(!e.shiftKey&&(document.activeElement===last||!menu.contains(document.activeElement))){e.preventDefault();first.focus()}}
+   }
+ },true);
+ if(wide.addEventListener)wide.addEventListener('change',()=>setOpen(wide.matches));else wide.addListener(()=>setOpen(wide.matches));
+ new MutationObserver(sync).observe(position,{childList:true,characterData:true,subtree:true});
+ root.classList.add('ll-sidebar-ready');sync();setOpen(wide.matches);
+})();
+
+</script>
+</html>
